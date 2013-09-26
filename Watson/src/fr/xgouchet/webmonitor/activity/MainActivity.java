@@ -5,7 +5,6 @@ import android.app.LoaderManager.LoaderCallbacks;
 import android.content.Loader;
 import android.database.Cursor;
 import android.os.Bundle;
-import android.view.Menu;
 import fr.xgouchet.webmonitor.R;
 
 
@@ -28,13 +27,6 @@ public class MainActivity extends Activity implements LoaderCallbacks<Cursor> {
         getLoaderManager().initLoader(LOADER_ID, null, this);
     }
     
-    
-    @Override
-    public boolean onCreateOptionsMenu(final Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.main, menu);
-        return true;
-    }
     
     //////////////////////////////////////////////////////////////////////////////////////
     // LoaderCallback Implementation

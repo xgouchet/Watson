@@ -14,7 +14,7 @@
 		android:protectionLevel="signature" >
 	</permission>
 
-	<uses-permission android:name="fr.xgouchet.websiteupdate.READ_PERMISSION" />
+	<uses-permission android:name="fr.xgouchet.webmonitor.READ_PERMISSION" />
 
 	<!-- Used to start the update service at boot time -->
 	<uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
@@ -30,15 +30,72 @@
 		android:icon="@drawable/ic_launcher"
 		android:label="@string/app_name"
 		android:theme="@style/WatsonTheme" >
+
+		<!-- Main activity -->
 		<activity
 			android:name="fr.xgouchet.webmonitor.activity.MainActivity"
-			android:label="@string/app_name" >
+			android:configChanges="screenSize|orientation|screenLayout"
+			android:label="@string/title_watson" >
 			<intent-filter>
 				<action android:name="android.intent.action.MAIN" />
 
 				<category android:name="android.intent.category.LAUNCHER" />
 			</intent-filter>
 		</activity>
+
+		<!-- New/Edit Target Activity -->
+		<activity
+			android:name="fr.xgouchet.webmonitor.activity.TargetActivity"
+			android:exported="true"
+			android:label="@string/title_target_new" >
+			<intent-filter>
+				<action android:name="android.intent.action.SEND" />
+
+				<data android:mimeType="text/plain" />
+
+				<category android:name="android.intent.category.DEFAULT" />
+			</intent-filter>
+		</activity>
+
+		<!-- Settings Activity -->
+		<activity
+			android:name="fr.xgouchet.webmonitor.activity.SettingsActivity"
+			android:label="@string/title_settings" >
+			<intent-filter>
+				<action android:name="android.intent.action.MANAGE_NETWORK_USAGE" />
+
+				<category android:name="android.intent.category.DEFAULT" />
+			</intent-filter>
+		</activity>
+
+		<!-- About Activity -->
+		<!-- <activity -->
+		<!-- android:name=".activity.WatsonAboutActivity" -->
+		<!-- android:label="@string/title_about" > -->
+		<!-- </activity> -->
+
+
+		<!-- Content Provider -->
+		<provider
+			android:name="fr.xgouchet.webmonitor.provider.TargetContentProvider"
+			android:authorities="fr.xgouchet.webmonitor"
+			android:permission="fr.xgouchet.webmonitor.READ_PERMISSION" >
+		</provider>
+
+		<!-- Services -->
+		<service android:name="fr.xgouchet.webmonitor.service.UpdateService" >
+		</service>
+
+		<!-- Broadcast Receivers -->
+		<receiver android:name=".receiver.WatsonBootReceiver" >
+			<intent-filter>
+				<action android:name="android.intent.action.BOOT_COMPLETED" />
+				<action android:name="android.intent.action.PACKAGE_FIRST_LAUNCH" />
+				<action android:name="android.intent.action.MY_PACKAGE_REPLACED" />
+			</intent-filter>
+		</receiver>
+		<receiver android:name=".receiver.WatsonAlarmReceiver" >
+		</receiver>
 	</application>
 
 </manifest>
