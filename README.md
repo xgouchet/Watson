@@ -1,4 +1,6 @@
 Watson
 ======
 
-An adnroid app to monitor web page changes
+An android app to monitor web page changes
+
+
