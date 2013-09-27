@@ -6,10 +6,10 @@ import android.content.Intent;
 
 public class UpdateService extends IntentService {
     
-    public UpdateService(final String name) {
+    public UpdateService() {
         super("Watson/UpdateService");
     }
-
+    
     @Override
     protected void onHandleIntent(final Intent intent) {
         // TODO Auto-generated method stub
