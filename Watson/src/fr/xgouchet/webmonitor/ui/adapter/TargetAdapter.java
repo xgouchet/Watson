@@ -9,11 +9,11 @@ import android.view.ViewGroup.LayoutParams;
 import android.widget.ImageView;
 import android.widget.TextView;
 import fr.xgouchet.webmonitor.R;
-import fr.xgouchet.webmonitor.data.DB;
+import fr.xgouchet.webmonitor.common.DB;
 import fr.xgouchet.webmonitor.data.Status;
 import fr.xgouchet.webmonitor.data.Target;
 import fr.xgouchet.webmonitor.data.TargetDAO;
-import fr.xgouchet.webmonitor.data.WatsonUtils;
+import fr.xgouchet.webmonitor.utils.WatsonUtils;
 
 
 public class TargetAdapter extends SimpleCursorAdapter {

@@ -6,7 +6,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteQueryBuilder;
 import android.net.Uri;
-import fr.xgouchet.webmonitor.data.DB;
+import fr.xgouchet.webmonitor.common.DB;
 import fr.xgouchet.webmonitor.data.WatsonDBHelper;
 
 

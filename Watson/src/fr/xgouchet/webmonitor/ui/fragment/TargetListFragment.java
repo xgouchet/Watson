@@ -1,21 +1,28 @@
 package fr.xgouchet.webmonitor.ui.fragment;
 
+import android.content.Intent;
 import android.database.Cursor;
+import android.database.CursorWrapper;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.app.ListFragment;
 import android.support.v4.app.LoaderManager.LoaderCallbacks;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
-import android.support.v4.widget.CursorAdapter;
+import android.support.v4.widget.SimpleCursorAdapter;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ListView;
 import fr.xgouchet.webmonitor.R;
-import fr.xgouchet.webmonitor.data.DB;
+import fr.xgouchet.webmonitor.activity.TargetActivity;
+import fr.xgouchet.webmonitor.common.Constants;
+import fr.xgouchet.webmonitor.common.DB;
+import fr.xgouchet.webmonitor.data.Target;
+import fr.xgouchet.webmonitor.data.TargetDAO;
 import fr.xgouchet.webmonitor.provider.TargetContentProvider;
 import fr.xgouchet.webmonitor.ui.adapter.TargetAdapter;
 
@@ -27,7 +34,10 @@ public class TargetListFragment extends ListFragment implements LoaderCallbacks<
     private static final int LOADER_ID = 42;
     
     /** the cursor adapter */
-    private CursorAdapter mAdapter;
+    private SimpleCursorAdapter mAdapter;
+    
+    /** Used for context menu */
+    private Target mSelectedTarget;
     
     //////////////////////////////////////////////////////////////////////////////////////
     // Fragment Lifecycle
@@ -59,7 +69,7 @@ public class TargetListFragment extends ListFragment implements LoaderCallbacks<
     public void onViewCreated(final View view, final Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         
-        getListView().setOnCreateContextMenuListener(this);
+        // TODO on long click : action mode
         getListView().setEmptyView(view.findViewById(android.R.id.empty));
     }
     
@@ -84,6 +94,25 @@ public class TargetListFragment extends ListFragment implements LoaderCallbacks<
         return result;
     }
     
+    //////////////////////////////////////////////////////////////////////////////////////
+    // ListFragment Implementation
+    //////////////////////////////////////////////////////////////////////////////////////
+    
+    @Override
+    public void onListItemClick(final ListView l, final View v, final int position, final long id) {
+        super.onListItemClick(l, v, position, id);
+        
+        // TODO pref on click, for now go to edit 
+        
+        
+        CursorWrapper cursor = (CursorWrapper) mAdapter.getItem(position);
+        Target target = TargetDAO.buildTargetFromCursor(cursor);
+        
+        Intent intent = new Intent(getActivity(), TargetActivity.class);
+        intent.setAction(Constants.ACTION_EDIT_TARGET);
+        intent.putExtra(Constants.EXTRA_TARGET, target);
+        startActivity(intent);
+    }
     
     //////////////////////////////////////////////////////////////////////////////////////
     // LoaderCallback Implementation
@@ -121,13 +150,19 @@ public class TargetListFragment extends ListFragment implements LoaderCallbacks<
         mAdapter.swapCursor(null);
     }
     
+    
     //////////////////////////////////////////////////////////////////////////////////////
     // 
     //////////////////////////////////////////////////////////////////////////////////////
     
     private void addNewTarget() {
+        
+        Bundle args = new Bundle(1);
+        args.putInt(Constants.EXTRA_COMMAND, Constants.CMD_CREATE);
+        
         FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
         TargetFragment addTarget = new TargetFragment();
+        addTarget.setArguments(args);
         addTarget.show(ft, "dialog");
     }
 }

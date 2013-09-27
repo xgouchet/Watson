@@ -34,12 +34,17 @@
 		<!-- Main activity -->
 		<activity
 			android:name="fr.xgouchet.webmonitor.activity.MainActivity"
-			android:configChanges="screenSize|orientation|screenLayout"
-			android:label="@string/title_watson" >
+			android:label="@string/title_watson"
+			android:uiOptions="splitActionBarWhenNarrow" >
 			<intent-filter>
 				<action android:name="android.intent.action.MAIN" />
 
 				<category android:name="android.intent.category.LAUNCHER" />
+			</intent-filter>
+			<intent-filter>
+				<action android:name="android.intent.action.MANAGE_NETWORK_USAGE" />
+
+				<category android:name="android.intent.category.DEFAULT" />
 			</intent-filter>
 		</activity>
 
@@ -58,24 +63,6 @@
 				<category android:name="android.intent.category.DEFAULT" />
 			</intent-filter>
 		</activity>
-
-		<!-- Settings Activity -->
-		<activity
-			android:name="fr.xgouchet.webmonitor.activity.SettingsActivity"
-			android:label="@string/title_settings" >
-			<intent-filter>
-				<action android:name="android.intent.action.MANAGE_NETWORK_USAGE" />
-
-				<category android:name="android.intent.category.DEFAULT" />
-			</intent-filter>
-		</activity>
-
-		<!-- About Activity -->
-		<!-- <activity -->
-		<!-- android:name=".activity.WatsonAboutActivity" -->
-		<!-- android:label="@string/title_about" > -->
-		<!-- </activity> -->
-
 
 		<!-- Content Provider -->
 		<provider

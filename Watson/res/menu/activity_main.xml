@@ -3,11 +3,13 @@
 
 	<item
 		android:id="@+id/menu_settings"
-		android:showAsAction="never"
+		android:icon="@drawable/ic_action_prefs"
+		android:showAsAction="ifRoom"
 		android:title="@string/menu_settings"/>
 	<item
 		android:id="@+id/menu_about"
-		android:showAsAction="never"
+		android:icon="@drawable/ic_action_about"
+		android:showAsAction="ifRoom"
 		android:title="@string/menu_about"/>
 
 </menu>

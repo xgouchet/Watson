@@ -1,4 +1,4 @@
-package fr.xgouchet.webmonitor.data;
+package fr.xgouchet.webmonitor.common;
 
 import java.util.LinkedList;
 import java.util.List;

@@ -1,5 +1,6 @@
 package fr.xgouchet.webmonitor.data;
 
+import fr.xgouchet.webmonitor.common.DB;
 import fr.xgouchet.webmonitor.provider.TargetContentProvider;
 import android.content.ContentValues;
 import android.content.Context;
@@ -23,11 +24,11 @@ public final class TargetDAO {
     /**
      * Get the singleton instance, create it if needed
      */
-    public static TargetDAO getSingleton() {
+    public static TargetDAO getInstance(final Context context) {
         if (sInstance == null) {
             synchronized (TargetDAO.class) {
                 if (sInstance == null) {
-                    sInstance = new TargetDAO();
+                    sInstance = new TargetDAO(context);
                     
                 }
             }
@@ -42,14 +43,6 @@ public final class TargetDAO {
     private Context mContext;
     private WatsonDBHelper mHelper;
     
-    /**
-     * @param context
-     *            the current application context
-     */
-    public void init(final Context context) {
-        mContext = context;
-        mHelper = new WatsonDBHelper(mContext);
-    }
     
     /**
      * @param url
@@ -175,9 +168,7 @@ public final class TargetDAO {
      */
     public void deleteTarget(final Target target) {
         
-        // Statement
-        ContentValues values = buildContentValuesFromTarget(target);
-        
+        // Statement       
         String where = DB.TARGET.ID + "=?";
         String[] whereArgs = new String[] {
                 Long.toString(target.getTargetId())
@@ -291,6 +282,12 @@ public final class TargetDAO {
         return contentValues;
     }
     
-    private TargetDAO() {
+    /**
+     * @param context
+     *            the current application context
+     */
+    private TargetDAO(final Context context) {
+        mContext = context;
+        mHelper = new WatsonDBHelper(mContext);
     }
 }

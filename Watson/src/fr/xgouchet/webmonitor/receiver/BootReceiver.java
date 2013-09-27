@@ -8,7 +8,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
-import fr.xgouchet.webmonitor.data.Constants;
+import fr.xgouchet.webmonitor.common.Constants;
 
 
 public class BootReceiver extends BroadcastReceiver {
@@ -38,7 +38,7 @@ public class BootReceiver extends BroadcastReceiver {
         
         // compute first call time 5 minutes after boot
         Calendar calendar = Calendar.getInstance();
-        calendar.add(Calendar.MINUTE, 5);
+        calendar.add(Calendar.SECOND, 5); // FIXME 
         long trigger = calendar.getTimeInMillis();
         
         // set delay between each call

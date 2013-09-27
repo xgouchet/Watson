@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+	android:key="watson_settings"
+	android:title="@string/title_settings" >
+
+	<PreferenceCategory android:title="@string/pref_cat_display" >
+		<CheckBoxPreference
+			android:defaultValue="false"
+			android:key="blink_led"
+			android:summaryOff="@string/pref_summary_off_blink_led"
+			android:summaryOn="@string/pref_summary_on_blink_led"
+			android:title="@string/pref_title_blink_led" />
+
+		<ListPreference
+			android:defaultValue="white"
+			android:dependency="blink_led"
+			android:entries="@array/color_names"
+			android:entryValues="@array/color_values"
+			android:key="led_color"
+			android:summary="@string/pref_summary_led_color"
+			android:title="@string/pref_title_led_color" />
+
+		<CheckBoxPreference
+			android:defaultValue="false"
+			android:key="blink_led_error"
+			android:summaryOff="@string/pref_summary_off_blink_led_error"
+			android:summaryOn="@string/pref_summary_on_blink_led_error"
+			android:title="@string/pref_title_blink_led_error" />
+
+		<ListPreference
+			android:defaultValue="red"
+			android:dependency="blink_led_error"
+			android:entries="@array/color_names"
+			android:entryValues="@array/color_values"
+			android:key="led_error_color"
+			android:summary="@string/pref_summary_led_error_color"
+			android:title="@string/pref_title_led_error_color" />
+	</PreferenceCategory>
+	<PreferenceCategory android:title="@string/pref_cat_network" >
+		<CheckBoxPreference
+			android:defaultValue="false"
+			android:key="wifi_only"
+			android:title="@string/pref_title_wifi_only" />
+		<CheckBoxPreference
+			android:defaultValue="false"
+			android:key="allow_roaming"
+			android:title="@string/pref_title_allow_roaming" />
+
+		<ListPreference
+			android:defaultValue="0"
+			android:entries="@array/frequency_names"
+			android:entryValues="@array/frequency_values"
+			android:key="default_frequency"
+			android:title="@string/pref_title_default_frequency" />
+	</PreferenceCategory>
+
+</PreferenceScreen>

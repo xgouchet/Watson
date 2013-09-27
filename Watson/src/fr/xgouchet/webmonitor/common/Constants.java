@@ -1,4 +1,4 @@
-package fr.xgouchet.webmonitor.data;
+package fr.xgouchet.webmonitor.common;
 
 
 public final class Constants {
@@ -43,16 +43,16 @@ public final class Constants {
     // Actions
     //////////////////////////////////////////////////////////////////////////////////////
     
-    public static final String EXTRA_ACTION = "action";
+    public static final String EXTRA_COMMAND = "action";
     public static final String EXTRA_TARGET = "target";
     
     public static final String ACTION_EDIT_TARGET = "fr.xgouchet.webmonitor.ACTION_EDIT_TARGET";
     public static final String ACTION_NEW_TARGET = "fr.xgouchet.webmonitor.ACTION_NEW_TARGET";
     public static final String ACTION_CHECK_TARGET = "fr.xgouchet.webmonitor.ACTION_CHECK_TARGET";
     
-    public static final int ACTION_CREATE = 1;
-    public static final int ACTION_EDIT = 2;
-    public static final int ACTION_DELETE = 3;
+    public static final int CMD_CREATE = 1;
+    public static final int CMD_EDIT = 2;
+    public static final int CMD_DELETE = 3;
     
     private Constants() {
     }

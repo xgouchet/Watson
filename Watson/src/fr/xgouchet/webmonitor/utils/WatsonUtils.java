@@ -1,4 +1,4 @@
-package fr.xgouchet.webmonitor.data;
+package fr.xgouchet.webmonitor.utils;
 
 import java.io.File;
 import java.util.Date;
@@ -11,6 +11,8 @@ import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.text.format.DateFormat;
 import fr.xgouchet.webmonitor.R;
+import fr.xgouchet.webmonitor.data.Status;
+import fr.xgouchet.webmonitor.data.Target;
 
 
 public final class WatsonUtils {
