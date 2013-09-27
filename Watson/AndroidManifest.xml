@@ -46,8 +46,10 @@
 		<!-- New/Edit Target Activity -->
 		<activity
 			android:name="fr.xgouchet.webmonitor.activity.TargetActivity"
+			android:excludeFromRecents="true"
 			android:exported="true"
-			android:label="@string/title_target_new" >
+			android:label="@string/title_target_new"
+			android:theme="@style/WatsonTheme.Translucent" >
 			<intent-filter>
 				<action android:name="android.intent.action.SEND" />
 
@@ -87,14 +89,14 @@
 		</service>
 
 		<!-- Broadcast Receivers -->
-		<receiver android:name=".receiver.WatsonBootReceiver" >
+		<receiver android:name="fr.xgouchet.webmonitor.receiver.BootReceiver" >
 			<intent-filter>
 				<action android:name="android.intent.action.BOOT_COMPLETED" />
 				<action android:name="android.intent.action.PACKAGE_FIRST_LAUNCH" />
 				<action android:name="android.intent.action.MY_PACKAGE_REPLACED" />
 			</intent-filter>
 		</receiver>
-		<receiver android:name=".receiver.WatsonAlarmReceiver" >
+		<receiver android:name="fr.xgouchet.webmonitor.receiver.AlarmReceiver" >
 		</receiver>
 	</application>
 

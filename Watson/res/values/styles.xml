@@ -4,7 +4,7 @@
         Base application theme, dependent on API level. This theme is replaced
         by AppBaseTheme from res/values-vXX/styles.xml on newer devices.
 	-->
-	<style name="WatsonBaseTheme" parent="android:Theme.Light">
+	<style name="BaseTheme" parent="@android:style/Theme.Light">
 		<!--
             Theme customizations available in newer API levels can go in
             res/values-vXX/styles.xml, while customizations related to
@@ -12,8 +12,14 @@
 		-->
 	</style>
 
+	<style name="DialogTheme" parent="@android:style/Theme.Translucent.NoTitleBar"></style>
+
 	<!-- Application theme. -->
-	<style name="WatsonTheme" parent="WatsonBaseTheme">
+	<style name="WatsonTheme" parent="@style/BaseTheme">
+		<!-- All customizations that are NOT specific to a particular API-level can go here. -->
+	</style>
+
+	<style name="WatsonTheme.Translucent" parent="@style/DialogTheme">
 		<!-- All customizations that are NOT specific to a particular API-level can go here. -->
 	</style>
 
