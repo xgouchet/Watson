@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!--  -->
+    <string name="notif_error">"An error occurred"</string>
+
+    <!-- Non HTTP errros -->
+    <string name="notif_dns_error">"Unable to resolve the address of the host"</string>
+    <string name="notif_url_format">"Error in the page's URL"</string>
+
+    <!-- HTTP errors -->
+    <string name="notif_http_404">"Page not found"</string>
+
+</resources>

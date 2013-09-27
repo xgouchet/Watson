@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="pref_cat_display">Display</string>
+    <string name="pref_cat_network">network</string>
+
+    <!--  -->
+    <string name="pref_title_blink_led">Notification Light</string>
+    <string name="pref_title_led_color">Update Color</string>
+    <string name="pref_title_blink_led_error">Error Notification Light</string>
+    <string name="pref_title_led_error_color">Error Color</string>
+    <string name="pref_summary_led_color">"Light's color for updates"</string>
+    <string name="pref_summary_on_blink_led">"The phone's led will blink when an update is detected"</string>
+    <string name="pref_summary_off_blink_led">"The phone's led won't be used for updates"</string>
+    <string name="pref_summary_led_error_color">"Light's color for errors"</string>
+    <string name="pref_summary_on_blink_led_error">"The phone's led will blink when an error is detected"</string>
+    <string name="pref_summary_off_blink_led_error">"The phone's led won't be used for errors"</string>
+
+    <!--  -->
+    <string name="pref_title_wifi_only">Check pages over Wifi only</string>
+    <string name="pref_title_allow_roaming">Allow checks when roaming</string>
+    <string name="pref_title_default_frequency">Default update frequency</string>
+
+    <!-- Colors -->
+    <string-array name="color_names">
+        <item>White</item>
+        <item>Red</item>
+        <item>Green</item>
+        <item>Blue</item>
+        <item>Yellow</item>
+        <item>Cyan</item>
+        <item>Magenta</item>
+        <item>Orange</item>
+        <item>Violet</item>
+    </string-array>
+    <string-array name="color_values">
+        <item>white</item>
+        <item>red</item>
+        <item>green</item>
+        <item>blue</item>
+        <item>yellow</item>
+        <item>cyan</item>
+        <item>magenta</item>
+        <item>orange</item>
+        <item>violet</item>
+    </string-array>
+
+    <!-- Frequencies -->
+    <string-array name="frequency_names">
+        <item>Twice a day</item>
+        <item>Once a day</item>
+        <item>Twice a week</item>
+        <item>Once a week</item>
+        <item>Twice a month</item>
+        <item>Once a month</item>
+    </string-array>
+    <string-array name="frequency_values">
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+    </string-array>
+
+    <!-- Difference -->
+    <string-array name="difference_names">
+        <item>0</item>
+        <item>10</item>
+        <item>25</item>
+        <item>50</item>
+        <item>100</item>
+        <item>250</item>
+        <item>500</item>
+    </string-array>
+
+</resources>

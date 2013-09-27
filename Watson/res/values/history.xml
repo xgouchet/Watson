@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    
+    <!--  -->
+    <string name="welcome">"Thanks for downloading and using Watson ! 
+
+This application aims to keep track of updates for websites without RSS. To us Watson, you can use the add button in the menu, or Share a web page from your favorite browser. 
+
+Then just choose how frequently the app should check for an update and you'll be notified when the page changes. "</string>
+
+    <!--  -->
+    <string name="release1">Waton 1.0</string>
+    <string name="release1_log">"- check website updates and notifies you"</string>
+
+</resources>
