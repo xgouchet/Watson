@@ -85,6 +85,8 @@ public final class TargetDAO {
             db.close();
         }
         
+        
+        
         return target;
     }
     
@@ -106,8 +108,6 @@ public final class TargetDAO {
                 db.insert(DB.TARGET.TABLE_NAME, null, values);
                 
                 db.setTransactionSuccessful();
-                
-                notifyContentProvider();
             }
             catch (Exception e) {
                 Log.e(LOG_TAG, "Exception on insertTarget(target)", e);
@@ -119,6 +119,7 @@ public final class TargetDAO {
             db.close();
         }
         
+        notifyContentProvider();
     }
     
     /**
@@ -146,8 +147,6 @@ public final class TargetDAO {
                 db.update(DB.TARGET.TABLE_NAME, values, where, whereArgs);
                 
                 db.setTransactionSuccessful();
-                
-                notifyContentProvider();
             }
             catch (Exception e) {
                 Log.e(LOG_TAG, "Exception on insertTarget(target)", e);
@@ -158,6 +157,8 @@ public final class TargetDAO {
             
             db.close();
         }
+        
+        notifyContentProvider();
     }
     
     /**
@@ -183,8 +184,6 @@ public final class TargetDAO {
                 db.delete(DB.TARGET.TABLE_NAME, where, whereArgs);
                 
                 db.setTransactionSuccessful();
-                
-                notifyContentProvider();
             }
             catch (Exception e) {
                 Log.e(LOG_TAG, "Exception on insertTarget(target)", e);
@@ -195,6 +194,8 @@ public final class TargetDAO {
             
             db.close();
         }
+        
+        notifyContentProvider();
     }
     
     //////////////////////////////////////////////////////////////////////////////////////
@@ -272,12 +273,15 @@ public final class TargetDAO {
         
         contentValues.put(DB.TARGET.URL, target.getUrl());
         contentValues.put(DB.TARGET.TITLE, target.getTitle());
-        contentValues.put(DB.TARGET.CONTENT, target.getContent());
         contentValues.put(DB.TARGET.LAST_CHECK, target.getLastCheck());
         contentValues.put(DB.TARGET.LAST_UPDATE, target.getLastUpdate());
         contentValues.put(DB.TARGET.FREQUENCY, target.getFrequency());
         contentValues.put(DB.TARGET.STATUS, target.getStatus());
         contentValues.put(DB.TARGET.DIFFERENCE, target.getMinimumDifference());
+        
+        if (target.getContent() != null) {
+            contentValues.put(DB.TARGET.CONTENT, target.getContent());
+        }
         
         return contentValues;
     }

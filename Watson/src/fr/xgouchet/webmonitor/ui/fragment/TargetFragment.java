@@ -25,6 +25,7 @@ import fr.xgouchet.webmonitor.data.Status;
 import fr.xgouchet.webmonitor.data.Target;
 import fr.xgouchet.webmonitor.data.TargetDAO;
 import fr.xgouchet.webmonitor.receiver.BootReceiver;
+import fr.xgouchet.webmonitor.service.UpdateService;
 import fr.xgouchet.webmonitor.ui.notification.TargetNotification;
 
 
@@ -98,11 +99,7 @@ public class TargetFragment extends DialogFragment implements OnShowListener {
         return mAlertDialog;
     }
     
-    @Override
-    public void onAttach(final Activity activity) {
-        // TODO Auto-generated method stub
-        super.onAttach(activity);
-    }
+    
     
     @Override
     public void onResume() {
@@ -122,7 +119,7 @@ public class TargetFragment extends DialogFragment implements OnShowListener {
         }
     }
     
-   
+    
     
     @Override
     public void onDismiss(final DialogInterface dialog) {
@@ -209,8 +206,10 @@ public class TargetFragment extends DialogFragment implements OnShowListener {
                 break;
         }
         
-        Intent update = new Intent(getActivity(), BootReceiver.class);
-        getActivity().sendBroadcast(update);
+        Intent update = new Intent(getActivity(), UpdateService.class);
+        update.putExtra(Constants.EXTRA_TARGET, target);
+        update.setAction(Constants.ACTION_CHECK_TARGET);
+        getActivity().startService(update);
         
         dismiss();
     }

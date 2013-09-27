@@ -162,7 +162,7 @@ public class UpdateService extends IntentService {
         String content = WebUtils.getTargetContent(target);
         if (content != null) {
             WebUtils.ensureFaviconExists(this, target);
-            // checkContentUpdate(target, content, now);
+            checkContentUpdate(target, content, now);
         }
         
         target.setLastCheck(now);
@@ -171,6 +171,23 @@ public class UpdateService extends IntentService {
         mTargetDao.updateTarget(target);
         if ((target.getStatus() != oldStatus) || (target.getStatus() == Status.UPDATED)) {
             mUpdated.add(target);
+        }
+    }
+    
+    /**
+     * 
+     * @param target
+     * @param content
+     * @param now
+     */
+    private void checkContentUpdate(final Target target, final String content, final long now) {
+        Log.d(LOG_TAG, "checkContentUpdate " + target);
+        target.setStatus(Status.OK);
+        
+        if ((target.getLastCheck() == 0) || (target.getContent() == null)) {
+            target.setContent(content);
+        } else {
+            // TODO diff 
         }
     }
     
