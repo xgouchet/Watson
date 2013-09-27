@@ -1,5 +1,7 @@
 package fr.xgouchet.webmonitor.data;
 
+import fr.xgouchet.webmonitor.provider.TargetContentProvider;
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -94,6 +96,129 @@ public final class TargetDAO {
     }
     
     /**
+     * Inserts a target in database
+     * 
+     * @param target
+     *            the target to add
+     */
+    public void insertTarget(final Target target) {
+        ContentValues values = buildContentValuesFromTarget(target);
+        
+        synchronized (this) {
+            SQLiteDatabase db = mHelper.getReadableDatabase();
+            
+            db.beginTransaction();
+            
+            try {
+                db.insert(DB.TARGET.TABLE_NAME, null, values);
+                
+                db.setTransactionSuccessful();
+                
+                notifyContentProvider();
+            }
+            catch (Exception e) {
+                Log.e(LOG_TAG, "Exception on insertTarget(target)", e);
+            }
+            finally {
+                db.endTransaction();
+            }
+            
+            db.close();
+        }
+        
+    }
+    
+    /**
+     * Updates the data of a target
+     * 
+     * @param target
+     *            the target content to update
+     */
+    public void updateTarget(final Target target) {
+        
+        // Statement
+        ContentValues values = buildContentValuesFromTarget(target);
+        
+        String where = DB.TARGET.ID + "=?";
+        String[] whereArgs = new String[] {
+                Long.toString(target.getTargetId())
+        };
+        
+        synchronized (this) {
+            SQLiteDatabase db = mHelper.getReadableDatabase();
+            
+            db.beginTransaction();
+            
+            try {
+                db.update(DB.TARGET.TABLE_NAME, values, where, whereArgs);
+                
+                db.setTransactionSuccessful();
+                
+                notifyContentProvider();
+            }
+            catch (Exception e) {
+                Log.e(LOG_TAG, "Exception on insertTarget(target)", e);
+            }
+            finally {
+                db.endTransaction();
+            }
+            
+            db.close();
+        }
+    }
+    
+    /**
+     * Deletes the target from database
+     * 
+     * @param target
+     *            the target content to delete
+     */
+    public void deleteTarget(final Target target) {
+        
+        // Statement
+        ContentValues values = buildContentValuesFromTarget(target);
+        
+        String where = DB.TARGET.ID + "=?";
+        String[] whereArgs = new String[] {
+                Long.toString(target.getTargetId())
+        };
+        
+        synchronized (this) {
+            SQLiteDatabase db = mHelper.getReadableDatabase();
+            
+            db.beginTransaction();
+            
+            try {
+                db.delete(DB.TARGET.TABLE_NAME, where, whereArgs);
+                
+                db.setTransactionSuccessful();
+                
+                notifyContentProvider();
+            }
+            catch (Exception e) {
+                Log.e(LOG_TAG, "Exception on insertTarget(target)", e);
+            }
+            finally {
+                db.endTransaction();
+            }
+            
+            db.close();
+        }
+    }
+    
+    //////////////////////////////////////////////////////////////////////////////////////
+    // Utilities
+    //////////////////////////////////////////////////////////////////////////////////////
+    
+    /**
+     * Notifies the Content Provider that the underlying data has changed
+     */
+    private void notifyContentProvider() {
+        mContext.getContentResolver().notifyChange(
+                TargetContentProvider.BASE_URI, null);
+    }
+    
+    /**
      * @param cursor
      *            a cursor on a target table
      * @return the target instance corresponding to the cursor
@@ -150,6 +275,21 @@ public final class TargetDAO {
         return target;
     }
     
+    public static ContentValues buildContentValuesFromTarget(final Target target) {
+        final ContentValues contentValues = new ContentValues();
+        
+        
+        contentValues.put(DB.TARGET.URL, target.getUrl());
+        contentValues.put(DB.TARGET.TITLE, target.getTitle());
+        contentValues.put(DB.TARGET.CONTENT, target.getContent());
+        contentValues.put(DB.TARGET.LAST_CHECK, target.getLastCheck());
+        contentValues.put(DB.TARGET.LAST_UPDATE, target.getLastUpdate());
+        contentValues.put(DB.TARGET.FREQUENCY, target.getFrequency());
+        contentValues.put(DB.TARGET.STATUS, target.getStatus());
+        contentValues.put(DB.TARGET.DIFFERENCE, target.getMinimumDifference());
+        
+        return contentValues;
+    }
     
     private TargetDAO() {
     }

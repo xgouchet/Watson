@@ -6,7 +6,7 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import fr.xgouchet.webmonitor.ui.TargetFragment;
+import fr.xgouchet.webmonitor.ui.fragment.TargetFragment;
 
 
 public class TargetActivity extends FragmentActivity {

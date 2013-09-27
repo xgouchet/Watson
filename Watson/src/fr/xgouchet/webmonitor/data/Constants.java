@@ -50,6 +50,10 @@ public final class Constants {
     public static final String ACTION_NEW_TARGET = "fr.xgouchet.webmonitor.ACTION_NEW_TARGET";
     public static final String ACTION_CHECK_TARGET = "fr.xgouchet.webmonitor.ACTION_CHECK_TARGET";
     
+    public static final int ACTION_CREATE = 1;
+    public static final int ACTION_EDIT = 2;
+    public static final int ACTION_DELETE = 3;
+    
     private Constants() {
     }
 }

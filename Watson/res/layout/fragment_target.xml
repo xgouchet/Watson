@@ -1,116 +1,116 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:padding="4dp" >
+	xmlns:tools="http://schemas.android.com/tools"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent"
+	android:padding="8dp" >
 
-    <EditText
-        android:id="@+id/editUrl"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_marginBottom="4dp"
-        android:layout_marginLeft="100dp"
-        android:layout_marginRight="4dp"
-        android:layout_marginTop="4dp"
-        android:ems="10"
-        android:inputType="textUri"
-        android:textSize="16sp" >
-    </EditText>
+	<EditText
+		android:id="@+id/editUrl"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:layout_alignParentTop="true"
+		android:layout_marginBottom="4dp"
+		android:layout_marginLeft="100dp"
+		android:layout_marginRight="4dp"
+		android:layout_marginTop="4dp"
+		android:ems="10"
+		android:inputType="textUri"
+		android:textSize="16sp" >
+	</EditText>
 
-    <EditText
-        android:id="@+id/editTitle"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/editUrl"
-        android:layout_marginBottom="4dp"
-        android:layout_marginLeft="100dp"
-        android:layout_marginRight="4dp"
-        android:layout_marginTop="4dp"
-        android:ems="10"
-        android:inputType="textUri"
-        android:textSize="16sp" >
-    </EditText>
+	<EditText
+		android:id="@+id/editTitle"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:layout_below="@+id/editUrl"
+		android:layout_marginBottom="4dp"
+		android:layout_marginLeft="100dp"
+		android:layout_marginRight="4dp"
+		android:layout_marginTop="4dp"
+		android:ems="10"
+		android:inputType="textUri"
+		android:textSize="16sp" >
+	</EditText>
 
-    <EditText
-        android:id="@+id/editFrequency"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/editTitle"
-        android:layout_marginBottom="4dp"
-        android:layout_marginLeft="100dp"
-        android:layout_marginRight="4dp"
-        android:layout_marginTop="4dp"
-        android:ems="10"
-        android:inputType="text"
-        android:visibility="invisible" >
-    </EditText>
+	<EditText
+		android:id="@+id/editFrequency"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:layout_below="@+id/editTitle"
+		android:layout_marginBottom="4dp"
+		android:layout_marginLeft="100dp"
+		android:layout_marginRight="4dp"
+		android:layout_marginTop="4dp"
+		android:ems="10"
+		android:inputType="text"
+		android:visibility="invisible" >
+	</EditText>
 
-    <EditText
-        android:id="@+id/editDifference"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/editFrequency"
-        android:layout_marginBottom="4dp"
-        android:layout_marginLeft="100dp"
-        android:layout_marginRight="4dp"
-        android:layout_marginTop="4dp"
-        android:ems="10"
-        android:inputType="text"
-        android:visibility="invisible" >
-    </EditText>
+	<EditText
+		android:id="@+id/editDifference"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:layout_below="@+id/editFrequency"
+		android:layout_marginBottom="4dp"
+		android:layout_marginLeft="100dp"
+		android:layout_marginRight="4dp"
+		android:layout_marginTop="4dp"
+		android:ems="10"
+		android:inputType="text"
+		android:visibility="invisible" >
+	</EditText>
 
-    <TextView
-        android:id="@+id/txtUrl"
-        android:layout_width="96dp"
-        android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/editUrl"
-        android:layout_alignParentLeft="true"
-        android:text="@string/ui_url" />
+	<TextView
+		android:id="@+id/txtUrl"
+		android:layout_width="96dp"
+		android:layout_height="wrap_content"
+		android:layout_alignBaseline="@+id/editUrl"
+		android:layout_alignParentLeft="true"
+		android:text="@string/ui_url" />
 
-    <TextView
-        android:id="@+id/txtTitle"
-        android:layout_width="96dp"
-        android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/editTitle"
-        android:layout_alignParentLeft="true"
-        android:text="@string/ui_title" />
+	<TextView
+		android:id="@+id/txtTitle"
+		android:layout_width="96dp"
+		android:layout_height="wrap_content"
+		android:layout_alignBaseline="@+id/editTitle"
+		android:layout_alignParentLeft="true"
+		android:text="@string/ui_title" />
 
-    <TextView
-        android:id="@+id/txtFrequency"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/editFrequency"
-        android:layout_alignParentLeft="true"
-        android:text="@string/ui_frequency" />
+	<TextView
+		android:id="@+id/txtFrequency"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_alignBaseline="@+id/editFrequency"
+		android:layout_alignParentLeft="true"
+		android:text="@string/ui_frequency" />
 
-    <TextView
-        android:id="@+id/txtDifference"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/editDifference"
-        android:layout_alignParentLeft="true"
-        android:text="@string/ui_frequency" />
+	<TextView
+		android:id="@+id/txtDifference"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_alignBaseline="@+id/editDifference"
+		android:layout_alignParentLeft="true"
+		android:text="@string/ui_difference" />
 
-    <Spinner
-        android:id="@+id/spinnerFrequency"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/editFrequency"
-        android:layout_alignLeft="@+id/editFrequency"
-        android:layout_alignRight="@+id/editFrequency"
-        android:layout_alignTop="@+id/editFrequency"
-        tools:listitem="@android:layout/simple_spinner_dropdown_item" />
+	<Spinner
+		android:id="@+id/spinnerFrequency"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:layout_alignBottom="@+id/editFrequency"
+		android:layout_alignLeft="@+id/editFrequency"
+		android:layout_alignRight="@+id/editFrequency"
+		android:layout_alignTop="@+id/editFrequency"
+		tools:listitem="@android:layout/simple_spinner_dropdown_item" />
 
-    <Spinner
-        android:id="@+id/spinnerDifference"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/editDifference"
-        android:layout_alignLeft="@+id/editDifference"
-        android:layout_alignRight="@+id/editDifference"
-        android:layout_alignTop="@+id/editDifference"
-        tools:listitem="@android:layout/simple_spinner_dropdown_item" />
+	<Spinner
+		android:id="@+id/spinnerDifference"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_alignBottom="@+id/editDifference"
+		android:layout_alignLeft="@+id/editDifference"
+		android:layout_alignRight="@+id/editDifference"
+		android:layout_alignTop="@+id/editDifference"
+		tools:listitem="@android:layout/simple_spinner_dropdown_item" />
 
 </RelativeLayout>
