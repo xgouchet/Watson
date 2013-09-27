@@ -1,6 +1,5 @@
 package fr.xgouchet.webmonitor.ui.fragment;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
@@ -24,7 +23,6 @@ import fr.xgouchet.webmonitor.common.Settings;
 import fr.xgouchet.webmonitor.data.Status;
 import fr.xgouchet.webmonitor.data.Target;
 import fr.xgouchet.webmonitor.data.TargetDAO;
-import fr.xgouchet.webmonitor.receiver.BootReceiver;
 import fr.xgouchet.webmonitor.service.UpdateService;
 import fr.xgouchet.webmonitor.ui.notification.TargetNotification;
 
