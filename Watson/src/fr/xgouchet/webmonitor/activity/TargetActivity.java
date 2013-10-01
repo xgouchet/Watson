@@ -1,17 +1,17 @@
 package fr.xgouchet.webmonitor.activity;
 
+import android.app.Activity;
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnDismissListener;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.FragmentActivity;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import fr.xgouchet.webmonitor.common.Constants;
 import fr.xgouchet.webmonitor.data.Target;
 import fr.xgouchet.webmonitor.ui.fragment.TargetFragment;
 
-public class TargetActivity extends FragmentActivity {
+public class TargetActivity extends Activity {
 
 	// ////////////////////////////////////////////////////////////////////////////////////
 	// Activity Lifecycle
@@ -41,7 +41,7 @@ public class TargetActivity extends FragmentActivity {
 		}
 
 		// start dialog fragment
-		FragmentManager mgr = getSupportFragmentManager();
+		FragmentManager mgr = getFragmentManager();
 		FragmentTransaction transaction = mgr.beginTransaction();
 		TargetFragment target = new TargetFragment();
 		target.setArguments(args);

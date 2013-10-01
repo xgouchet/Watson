@@ -1,9 +1,15 @@
 package fr.xgouchet.webmonitor.ui.fragment;
 
-import android.support.v4.app.ListFragment;
+import fr.xgouchet.webmonitor.R;
+import android.os.Bundle;
+import android.preference.PreferenceFragment;
 
+public class PrefsFragment extends PreferenceFragment {
 
+	@Override
+	public void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
 
-public class PrefsFragment extends ListFragment {
-    
+		addPreferencesFromResource(R.xml.preferences);
+	}
 }

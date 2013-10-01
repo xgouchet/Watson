@@ -10,7 +10,6 @@ import android.app.IntentService;
 import android.app.NotificationManager;
 import android.content.Intent;
 import android.database.Cursor;
-import android.text.InputFilter.LengthFilter;
 import android.util.Log;
 import android.widget.Toast;
 import fr.xgouchet.webmonitor.common.Constants;
@@ -165,7 +164,7 @@ public class UpdateService extends IntentService {
 		int oldStatus = target.getStatus();
 
 		// get online content
-		String content = WebUtils.getTargetContent(target);
+		String content = WebUtils.getTargetContent(this, target);
 		if (content != null) {
 			WebUtils.ensureFaviconExists(this, target);
 			checkContentUpdate(target, content, now);
@@ -203,6 +202,11 @@ public class UpdateService extends IntentService {
 			int totalDiff = 0;
 			for (Diff diff : diffs) {
 				if (diff.operation != Operation.EQUAL) {
+						
+					// ignore completely whitespace diff
+					if (diff.text.matches("^\\s+$")) {
+						continue;
+					}
 
 					totalDiff += diff.text.length();
 					logBuilder.append(diff.toString());

@@ -28,11 +28,13 @@ public final class DiffUtils {
 	private static String process(String input) {
 		String output;
 
-		// TODO prefs to :
-		// - ignore whitespaces ? replace("\\s+", " ");
+		output = input.trim().replaceAll("\\s+", " ");
+		
+		// TODO prefs to 
 		// - ignore case ?
-		// - ignore HTML ? regexp ?
-		return input;
+		// - ignore HTML tags ?
+		
+		return output;
 	}
 
 	/**

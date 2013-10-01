@@ -2549,7 +2549,23 @@ public class diff_match_patch {
 		 */
 		public String toString() {
 			String prettyText = this.text.replace('\n', '\u00b6');
-			return "Diff(" + this.operation + ",\"" + prettyText + "\")";
+			char bound;
+			switch (operation) {
+			case EQUAL:
+				bound = '=';
+				break;
+			case DELETE:
+				bound = '~';
+				break;
+			case INSERT:
+				bound = '+';
+				break;
+			default:
+				bound = '?';
+				break;
+			}
+
+			return bound + bound + "\"" + prettyText + "\"" + bound + bound;
 		}
 
 		/**
