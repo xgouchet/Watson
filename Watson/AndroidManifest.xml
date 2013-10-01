@@ -5,13 +5,8 @@
     android:versionName="1.0" >
 
     <uses-sdk
-        android:minSdkVersion="8"
+        android:minSdkVersion="9"
         android:targetSdkVersion="18" />
-
-    <!-- Unit Testing -->
-    <instrumentation
-        android:name="android.test.InstrumentationTestRunner"
-        android:targetPackage="fr.xgouchet.webmonitor" />
 
     <!-- Custom permission for the Content Provider -->
     <permission
