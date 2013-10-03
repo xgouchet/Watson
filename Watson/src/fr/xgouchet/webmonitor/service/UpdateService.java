@@ -10,6 +10,9 @@ import android.app.IntentService;
 import android.app.NotificationManager;
 import android.content.Intent;
 import android.database.Cursor;
+import android.graphics.Typeface;
+import android.text.style.CharacterStyle;
+import android.text.style.StyleSpan;
 import android.util.Log;
 import android.widget.Toast;
 import fr.xgouchet.webmonitor.common.Constants;
@@ -20,6 +23,7 @@ import fr.xgouchet.webmonitor.data.TargetDAO;
 import fr.xgouchet.webmonitor.provider.TargetContentProvider;
 import fr.xgouchet.webmonitor.ui.notification.TargetNotification;
 import fr.xgouchet.webmonitor.utils.DiffUtils;
+import fr.xgouchet.webmonitor.utils.SpannableBuilder;
 import fr.xgouchet.webmonitor.utils.WatsonUtils;
 import fr.xgouchet.webmonitor.utils.WebUtils;
 
@@ -198,11 +202,23 @@ public class UpdateService extends IntentService {
 			StringBuilder logBuilder = new StringBuilder();
 			List<Diff> diffs = DiffUtils.getDiff(oldContent, content);
 
+			// prepare display string
+			SpannableBuilder displayDiff = new SpannableBuilder();
+			CharacterStyle span;
+
 			// compute length of diff
 			int totalDiff = 0;
 			for (Diff diff : diffs) {
-				if (diff.operation != Operation.EQUAL) {
-						
+				if (diff.operation == Operation.EQUAL) {
+
+					span = new StyleSpan(Typeface.ITALIC);
+					if (diff.text.length() > 6) {
+						displayDiff.append("[...]", span);
+					} else {
+						displayDiff.append(diff.text, span);
+					}
+				} else {
+
 					// ignore completely whitespace diff
 					if (diff.text.matches("^\\s+$")) {
 						continue;
@@ -211,8 +227,17 @@ public class UpdateService extends IntentService {
 					totalDiff += diff.text.length();
 					logBuilder.append(diff.toString());
 					logBuilder.append('\n');
+
+					if (diff.operation == Operation.INSERT) {
+						span = new StyleSpan(Typeface.BOLD);
+						displayDiff.append(diff.text, span);
+					}
+
+					// span = new StrikethroughSpan();
 				}
 			}
+
+			target.setDisplayDiff(displayDiff.buildString());
 
 			if (totalDiff > target.getMinimumDifference()) {
 				target.setContent(content);

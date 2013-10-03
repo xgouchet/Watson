@@ -2565,7 +2565,7 @@ public class diff_match_patch {
 				break;
 			}
 
-			return bound + bound + "\"" + prettyText + "\"" + bound + bound;
+			return "" + bound + bound + "\"" + prettyText + "\"" + bound + bound;
 		}
 
 		/**

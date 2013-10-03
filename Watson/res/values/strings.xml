@@ -19,7 +19,8 @@
 	<string name="ui_difference">Difference</string>
 	<string name="ui_last_update">"Last updated : %1$s"</string>
 	<string name="ui_last_check">"Last checked : %1$s"</string>
-	<string name="ui_empty">"No website watched yet. \nUse the add button or share a webpage from your favorite browser."</string>
+	<string name="ui_status">"Last status : %1$s"</string>
+	<string name="ui_empty">"No website watched yet. \nAdd one now, or share a webpage from your favorite browser."</string>
 
 	<!--  -->
 	<string name="prompt_delete">"Do you really want to delete \"%1$s\" ?"</string>

@@ -1,52 +1,87 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="4dp" >
+    android:layout_margin="@dimen/card_margin"
+    android:background="@drawable/card_bg_r4"
+    android:baselineAligned="false"
+    android:orientation="horizontal" >
 
-    <TextView
-        android:id="@+id/txtTitle"
-        android:layout_width="match_parent"
+    <RelativeLayout
+        android:id="@android:id/button1"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginTop="8dip"
-        android:layout_toRightOf="@+id/imgIcon"
-        android:gravity="left|center_vertical"
-        android:paddingLeft="56dp"
-        android:text="@string/title_watson"
-        android:textAppearance="?android:attr/textAppearanceMedium" />
+        android:layout_weight="1"
+        android:background="@drawable/card_action_background" >
 
-    <TextView
-        android:id="@+id/txtSubtitle1"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_below="@+id/txtTitle"
-        android:gravity="left|bottom"
-        android:paddingLeft="72dp"
-        android:text="@string/ui_last_check"
-        android:textAppearance="?android:attr/textAppearanceSmall" />
+        <ImageView
+            android:id="@android:id/icon"
+            android:layout_width="@dimen/card_icon_size"
+            android:layout_height="@dimen/card_icon_size"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:contentDescription="@string/ui_title"
+            android:scaleType="centerInside"
+            android:src="@drawable/ic_favicon" />
 
-    <TextView
-        android:id="@+id/txtSubtitle2"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_below="@+id/txtSubtitle1"
-        android:gravity="left|bottom"
-        android:paddingLeft="72dp"
-        android:text="@string/ui_last_update"
-        android:textAppearance="?android:attr/textAppearanceSmall" />
+        <TextView
+            android:id="@android:id/title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@android:id/icon"
+            android:layout_alignTop="@android:id/icon"
+            android:layout_marginLeft="@dimen/card_text_margin"
+            android:layout_toRightOf="@android:id/icon"
+            android:gravity="left|center_vertical"
+            android:padding="@dimen/card_text_padding"
+            android:text="@string/title_watson"
+            android:textSize="@dimen/card_title_size" />
 
-    <ImageView
-        android:id="@+id/imgIcon"
-        android:layout_width="48dp"
-        android:layout_height="48dp"
-        android:layout_alignParentLeft="true"
-        android:layout_centerVertical="true"
-        android:contentDescription="@string/ui_title"
-        android:scaleType="fitCenter"
-        android:src="@android:drawable/ic_delete" />
+        <TextView
+            android:id="@android:id/text1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_below="@android:id/title"
+            android:gravity="left|bottom"
+            android:padding="@dimen/card_text_padding"
+            android:text="@string/ui_last_check"
+            android:textSize="@dimen/card_subtitle_size" />
 
-</RelativeLayout>
+        <TextView
+            android:id="@android:id/text2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_below="@android:id/text1"
+            android:gravity="left|bottom"
+            android:padding="@dimen/card_text_padding"
+            android:text="@string/ui_last_update"
+            android:textSize="@dimen/card_subtitle_size" />
+    </RelativeLayout>
+
+    <View
+        android:layout_width="1dp"
+        android:layout_height="match_parent"
+        android:background="@color/card_divider" />
+
+    <ImageButton
+        android:id="@android:id/button2"
+        android:layout_width="@dimen/card_action_width"
+        android:layout_height="match_parent"
+        android:background="@drawable/card_action_background"
+        android:src="@drawable/ic_action_edit" />
+
+    <View
+        android:layout_width="1dp"
+        android:layout_height="match_parent"
+        android:background="@color/card_divider" />
+
+    <ImageButton
+        android:id="@android:id/button3"
+        android:layout_width="@dimen/card_action_width"
+        android:layout_height="match_parent"
+        android:background="@drawable/card_action_background"
+        android:src="@drawable/ic_action_refresh" />
+
+</LinearLayout>

@@ -1,8 +1,5 @@
 package fr.xgouchet.webmonitor.ui.fragment;
 
-import java.util.LinkedList;
-import java.util.List;
-
 import android.app.FragmentTransaction;
 import android.app.ListFragment;
 import android.app.LoaderManager.LoaderCallbacks;
@@ -11,19 +8,15 @@ import android.content.Intent;
 import android.content.Loader;
 import android.database.Cursor;
 import android.database.CursorWrapper;
+import android.net.Uri;
 import android.os.Bundle;
-import android.view.ActionMode;
-import android.view.ActionMode.Callback;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.ListView;
-import android.widget.SimpleCursorAdapter;
 import fr.xgouchet.webmonitor.R;
 import fr.xgouchet.webmonitor.activity.TargetActivity;
 import fr.xgouchet.webmonitor.common.Constants;
@@ -31,19 +24,18 @@ import fr.xgouchet.webmonitor.common.DB;
 import fr.xgouchet.webmonitor.data.Target;
 import fr.xgouchet.webmonitor.data.TargetDAO;
 import fr.xgouchet.webmonitor.provider.TargetContentProvider;
+import fr.xgouchet.webmonitor.service.UpdateService;
 import fr.xgouchet.webmonitor.ui.adapter.TargetAdapter;
+import fr.xgouchet.webmonitor.ui.adapter.TargetAdapter.Listener;
 
 public class TargetListFragment extends ListFragment implements
-		LoaderCallbacks<Cursor>, OnItemLongClickListener, Callback {
+		LoaderCallbacks<Cursor>, Listener {
 
 	/** the Loader ID */
 	private static final int LOADER_ID = 42;
 
 	/** the cursor adapter */
-	private SimpleCursorAdapter mAdapter;
-
-	/** Used for context menu */
-	private List<Target> mSelectedTargets;
+	private TargetAdapter mAdapter;
 
 	// ////////////////////////////////////////////////////////////////////////////////////
 	// Fragment Lifecycle
@@ -69,12 +61,11 @@ public class TargetListFragment extends ListFragment implements
 		super.onActivityCreated(savedInstanceState);
 
 		mAdapter = new TargetAdapter(getActivity(), null);
+		mAdapter.setListener(this);
 		setListAdapter(mAdapter);
 
 		// TODO on long click : action mode
 		getListView().setEmptyView(getView().findViewById(android.R.id.empty));
-		getListView().setOnItemLongClickListener(this);
-
 	}
 
 	@Override
@@ -106,6 +97,27 @@ public class TargetListFragment extends ListFragment implements
 	}
 
 	// ////////////////////////////////////////////////////////////////////////////////////
+	// TargetAdapter.Listener Implementation
+	// ////////////////////////////////////////////////////////////////////////////////////
+
+	@Override
+	public void onActionRequested(int actionIndex, Target target) {
+
+		//
+		switch (actionIndex) {
+		case 0:
+			openTargetUrl(target);
+			break;
+		case 1:
+			editTarget(target);
+			break;
+		case 2:
+			checkTarget(target);
+			break;
+		}
+	}
+
+	// ////////////////////////////////////////////////////////////////////////////////////
 	// ListFragment Implementation
 	// ////////////////////////////////////////////////////////////////////////////////////
 
@@ -123,61 +135,6 @@ public class TargetListFragment extends ListFragment implements
 		intent.setAction(Constants.ACTION_EDIT_TARGET);
 		intent.putExtra(Constants.EXTRA_TARGET, target);
 		startActivity(intent);
-	}
-
-	// ////////////////////////////////////////////////////////////////////////////////////
-	// OnItemLongClickListener Implementation
-	// ////////////////////////////////////////////////////////////////////////////////////
-
-	@Override
-	public boolean onItemLongClick(AdapterView<?> parent, View view,
-			int position, long id) {
-
-		CursorWrapper cursor = (CursorWrapper) mAdapter.getItem(position);
-		Target target = TargetDAO.buildTargetFromCursor(cursor);
-
-		if (mActionModeActive) {
-			return false;
-		}
-
-		mSelectedTargets = new LinkedList<Target>();
-		mSelectedTargets.add(target);
-
-		mActionMode = getActivity().startActionMode(this);
-
-		return true;
-	}
-
-	// ////////////////////////////////////////////////////////////////////////////////////
-	// ActionMode Implementation
-	// ////////////////////////////////////////////////////////////////////////////////////
-
-	private ActionMode mActionMode;
-	private boolean mActionModeActive;
-
-	@Override
-	public boolean onCreateActionMode(ActionMode mode, Menu menu) {
-
-		getActivity().getMenuInflater().inflate(R.menu.context_target, menu);
-		return true;
-	}
-
-	@Override
-	public boolean onPrepareActionMode(ActionMode mode, Menu menu) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public void onDestroyActionMode(ActionMode mode) {
-		// TODO Auto-generated method stub
-
 	}
 
 	// ////////////////////////////////////////////////////////////////////////////////////
@@ -212,7 +169,7 @@ public class TargetListFragment extends ListFragment implements
 	}
 
 	// ////////////////////////////////////////////////////////////////////////////////////
-	//
+	// Actions
 	// ////////////////////////////////////////////////////////////////////////////////////
 
 	private void addNewTarget() {
@@ -225,5 +182,69 @@ public class TargetListFragment extends ListFragment implements
 		TargetFragment addTarget = new TargetFragment();
 		addTarget.setArguments(args);
 		addTarget.show(ft, "dialog");
+	}
+
+	private void openTargetUrl(Target target) {
+		Intent intent = new Intent(Intent.ACTION_VIEW);
+		intent.setData(Uri.parse(target.getUrl()));
+		startActivity(intent);
+	}
+
+	/**
+	 * Force check the target now
+	 */
+	private void checkTarget(Target target) {
+
+		Target fullTarget = TargetDAO.getInstance(getActivity()).getTarget(
+				target.getUrl());
+
+		Intent intent = new Intent(getActivity(), UpdateService.class);
+		intent.setAction(Constants.ACTION_CHECK_TARGET);
+		intent.putExtra(Constants.EXTRA_TARGET, fullTarget);
+		getActivity().startService(intent);
+	}
+
+	/**
+	 * 
+	 */
+	private void editTarget(Target target) {
+		Target fullTarget = TargetDAO.getInstance(getActivity()).getTarget(
+				target.getUrl());
+
+		Bundle args = new Bundle(1);
+		args.putInt(Constants.EXTRA_COMMAND, Constants.CMD_EDIT);
+		args.putParcelable(Constants.EXTRA_TARGET, fullTarget);
+
+		FragmentTransaction ft = getActivity().getFragmentManager()
+				.beginTransaction();
+		TargetFragment addTarget = new TargetFragment();
+		addTarget.setArguments(args);
+		addTarget.show(ft, "dialog");
+	}
+
+	/**
+	 * TODO Prompts the user before deleting the selected target
+	 */
+	private void deleteTarget() {
+		// Builder builder;
+		// builder = new Builder(this);
+		// builder.setTitle(R.string.ui_delete);
+		// builder.setMessage(getString(R.string.prompt_delete,
+		// mSelectedTarget.getTitle()));
+		//
+		// builder.setPositiveButton(R.string.ui_delete,
+		// new DialogInterface.OnClickListener() {
+		// public void onClick(DialogInterface dialog, int which) {
+		// doDeletetarget();
+		// }
+		// });
+		// builder.setNegativeButton(R.string.ui_cancel,
+		// new DialogInterface.OnClickListener() {
+		// public void onClick(DialogInterface dialog, int which) {
+		//
+		// }
+		// });
+		//
+		// builder.create().show();
 	}
 }

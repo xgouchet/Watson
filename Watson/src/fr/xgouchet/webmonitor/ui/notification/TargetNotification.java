@@ -2,6 +2,7 @@ package fr.xgouchet.webmonitor.ui.notification;
 
 import android.annotation.TargetApi;
 import android.app.Notification;
+import android.app.Notification.BigTextStyle;
 import android.app.Notification.Builder;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -65,87 +66,129 @@ public class TargetNotification {
 	 * @param target
 	 *            the target
 	 */
-	@SuppressWarnings("deprecation")
-	@TargetApi(Build.VERSION_CODES.JELLY_BEAN)
 	public static void notifyTargetStatus(final Context context,
 			final NotificationManager notificationManager, final Target target) {
 		if (target.getStatus() == Status.UPDATED) {
 			notificationManager.cancel(target.getUrl(), NOTIF_UPDATE);
+			notificationManager.cancel(target.getUrl(), NOTIF_ERROR);
 		} else {
 			notificationManager.cancel(target.getUrl(), NOTIF_ERROR);
 		}
 
 		int id;
-		Intent intent;
-		Builder builder = new Builder(context);
-		builder.setWhen(System.currentTimeMillis());
-		builder.setContentTitle(target.getTitle());
-		builder.setAutoCancel(true);
-		builder.setLargeIcon(WatsonUtils.getTargetIcon(context, target));
+
+		Notification notif;
 
 		if (target.getStatus() == Status.UPDATED) {
-			intent = buildUpdateNotification(builder, target);
+			notif = buildUpdateNotification(context, target);
 
 			id = NOTIF_UPDATE;
 		} else {
-			intent = buildErrorNotification(context, builder, target);
-
+			// intent = buildErrorNotification(context, builder, target);
+			notif = null;
 			id = NOTIF_ERROR;
-		}
-
-		builder.setContentIntent(PendingIntent.getActivity(context, 0, intent,
-				Intent.FLAG_ACTIVITY_NEW_TASK));
-		Notification notif;
-
-		// Fragmentation yeah !
-		if (VERSION.SDK_INT >= VERSION_CODES.JELLY_BEAN) {
-			notif = builder.build();
-		} else {
-			notif = builder.getNotification();
 		}
 
 		notificationManager.notify(target.getUrl(), id, notif);
 	}
 
 	/**
+	 * Builds a notification that this page content has changed
 	 * 
-	 * @param builder
+	 * @param context
+	 *            the current application context
 	 * @param target
-	 * @return
+	 *            the target
+	 * @return the notification
 	 */
-	private static Intent buildUpdateNotification(final Builder builder,
+	@SuppressWarnings("deprecation")
+	@TargetApi(Build.VERSION_CODES.JELLY_BEAN)
+	private static Notification buildUpdateNotification(Context context,
 			final Target target) {
-		builder.setSmallIcon(R.drawable.stat_notify_sync);
-		builder.setContentText("Some new content exists for the page \""
-				+ target.getTitle() + "\"");
+		Builder builder = new Builder(context);
 
+		// Basic notif params
+		builder.setWhen(System.currentTimeMillis());
+		builder.setContentTitle(target.getTitle());
+		builder.setAutoCancel(true);
+		builder.setLargeIcon(WatsonUtils.getTargetIcon(context, target));
+
+		builder.setSmallIcon(R.drawable.stat_notify_sync);
+		builder.setContentText("New Content");
+
+		// Led blink ?
 		if (Settings.sBlinkLed) {
 			builder.setLights(Settings.sBlinkLedColor, (int) Constants.SECOND,
 					(int) Constants.SECOND * 15);
 		}
 
+		// pending intent
 		Intent intent = new Intent(Intent.ACTION_VIEW);
 		intent.setData(Uri.parse(target.getUrl()));
+		builder.setContentIntent(PendingIntent.getActivity(context, 0, intent,
+				Intent.FLAG_ACTIVITY_NEW_TASK));
 
-		return intent;
+		// Android JB big notification
+		if (VERSION.SDK_INT >= VERSION_CODES.JELLY_BEAN) {
+			Notification.BigTextStyle bigTextStyle = new BigTextStyle(builder);
+			bigTextStyle.setSummaryText("New content is available for page \""
+					+ target.getTitle() + "\"");
+			bigTextStyle.bigText(target.getDisplayDiff());
+
+			return bigTextStyle.build();
+		} else {
+			return builder.getNotification();
+		}
 	}
 
-	private static Intent buildErrorNotification(final Context context,
-			final Builder builder, final Target target) {
-		builder.setSmallIcon(R.drawable.stat_notify_sync_error);
-		builder.setContentText(WatsonUtils.getErrorMessage(context,
-				target.getStatus()));
+	/**
+	 * Builds a notification that this page content could not be checked
+	 * 
+	 * @param context
+	 *            the current application context
+	 * @param target
+	 *            the target
+	 * @return the notification
+	 */
+	@TargetApi(Build.VERSION_CODES.JELLY_BEAN)
+	@SuppressWarnings("deprecation")
+	private static Notification buildErrorNotification(final Context context,
+			final Target target) {
 
+		Builder builder = new Builder(context);
+
+		// Basic notif params
+		builder.setWhen(System.currentTimeMillis());
+		builder.setContentTitle(target.getTitle());
+		builder.setAutoCancel(true);
+		builder.setLargeIcon(WatsonUtils.getTargetIcon(context, target));
+
+		builder.setSmallIcon(R.drawable.stat_notify_sync_error);
+		builder.setContentText("An error occured");
+
+		// Led blink ?
 		if (Settings.sBlinkLedError) {
 			builder.setLights(Settings.sBlinkLedErrorColor,
 					(int) Constants.SECOND, (int) Constants.SECOND * 15);
 		}
 
+		// Pending intent
 		Intent intent = new Intent(context, TargetActivity.class);
 		intent.setAction(Constants.ACTION_EDIT_TARGET);
 		intent.putExtra(Constants.EXTRA_TARGET, target);
 		intent.putExtra(Constants.EXTRA_COMMAND, Constants.CMD_EDIT);
+		builder.setContentIntent(PendingIntent.getActivity(context, 0, intent,
+				Intent.FLAG_ACTIVITY_NEW_TASK));
 
-		return intent;
+		// Android JB big notification
+		if (VERSION.SDK_INT >= VERSION_CODES.JELLY_BEAN) {
+			BigTextStyle bigTextStyle = new BigTextStyle(builder);
+			bigTextStyle.bigText(WatsonUtils.getErrorMessage(context,
+					target.getStatus()));
+
+			return bigTextStyle.build();
+		} else {
+			return builder.getNotification();
+		}
 	}
 }

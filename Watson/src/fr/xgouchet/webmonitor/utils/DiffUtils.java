@@ -15,13 +15,15 @@ public final class DiffUtils {
 
 		diff_match_patch dmp = new diff_match_patch();
 		dmp.Diff_Timeout = 0;
-		
+
 		List<Diff> diffs = dmp.diff_main(processedOld, processCurrent, false);
 
-		for (Diff diff : diffs){
-			Log.i("DIFF", diff.toString());
+		if (diffs.size() > 1) {
+			for (Diff diff : diffs) {
+				Log.i("DIFF", diff.toString());
+			}
 		}
-		
+
 		return diffs;
 	}
 
@@ -29,11 +31,11 @@ public final class DiffUtils {
 		String output;
 
 		output = input.trim().replaceAll("\\s+", " ");
-		
-		// TODO prefs to 
+
+		// TODO prefs to
 		// - ignore case ?
 		// - ignore HTML tags ?
-		
+
 		return output;
 	}
 

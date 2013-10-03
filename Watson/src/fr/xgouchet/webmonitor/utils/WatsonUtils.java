@@ -142,6 +142,31 @@ public final class WatsonUtils {
 		return error;
 	}
 
+	/**
+	 * 
+	 * @param status
+	 * @return
+	 */
+	public static int getIconForStatus(final int status) {
+		int icon;
+		switch (status) {
+		case Status.UPDATED:
+			icon = R.drawable.ic_updated;
+			break;
+		case Status.OK:
+			icon = R.drawable.ic_ok;
+			break;
+		case Status.UNKNOWN:
+			icon = R.drawable.ic_unknown;
+			break;
+		case Status.UNKNOWN_ERROR:
+		default:
+			icon = R.drawable.ic_error;
+			break;
+		}
+		return icon;
+	}
+
 	private WatsonUtils() {
 	}
 

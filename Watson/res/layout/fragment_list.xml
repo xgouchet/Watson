@@ -9,8 +9,9 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true" >
-    </ListView>
+        android:layout_centerVertical="true"
+        android:divider="@android:color/transparent"
+        tools:listitem="@layout/item_target" />
 
     <RelativeLayout
         android:id="@android:id/empty"

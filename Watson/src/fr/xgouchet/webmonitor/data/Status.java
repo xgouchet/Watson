@@ -1,6 +1,7 @@
 package fr.xgouchet.webmonitor.data;
 
 
+
 public final class Status {
     
     public static final int UNKNOWN = -1;
@@ -8,6 +9,8 @@ public final class Status {
     public static final int UPDATED = 42;
     
     
+    
+    public static final int HTTP_ERROR = 299;
     public static final int HTTP_CLIENT_ERROR = 400;
     public static final int HTTP_SERVER_ERROR = 500;
     
