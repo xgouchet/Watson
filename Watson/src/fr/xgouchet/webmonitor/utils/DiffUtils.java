@@ -1,10 +1,10 @@
 package fr.xgouchet.webmonitor.utils;
 
+import java.util.LinkedList;
 import java.util.List;
 
 import name.fraser.neil.plaintext.diff_match_patch;
 import name.fraser.neil.plaintext.diff_match_patch.Diff;
-import android.util.Log;
 
 public final class DiffUtils {
 
@@ -17,11 +17,28 @@ public final class DiffUtils {
 		dmp.Diff_Timeout = 0;
 
 		List<Diff> diffs = dmp.diff_main(processedOld, processCurrent, false);
+		List<Diff> packed = new LinkedList<diff_match_patch.Diff>();
 
-		if (diffs.size() > 1) {
-			for (Diff diff : diffs) {
-				Log.i("DIFF", diff.toString());
+		int diffCount = diffs.size();
+		if (diffCount > 1) {
+
+			Diff previous = diffs.get(0);
+			Diff diff = null;
+
+			for (int i = 1; i < diffCount; ++i) {
+				diff = diffs.get(i);
+
+				if (diff.text.matches("\\s*")) {
+					continue;
+				} else if (diff.operation == previous.operation) {
+					previous.text += diff.text;
+				} else {
+					packed.add(previous);
+					previous = diff;
+				}
 			}
+
+			packed.add(previous);
 		}
 
 		return diffs;

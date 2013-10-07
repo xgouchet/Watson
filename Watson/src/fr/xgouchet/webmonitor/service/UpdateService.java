@@ -11,7 +11,6 @@ import android.app.NotificationManager;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Typeface;
-import android.text.style.CharacterStyle;
 import android.text.style.StyleSpan;
 import android.util.Log;
 import android.widget.Toast;
@@ -204,52 +203,57 @@ public class UpdateService extends IntentService {
 
 			// prepare display string
 			SpannableBuilder displayDiff = new SpannableBuilder();
-			CharacterStyle span;
 
 			// compute length of diff
 			int totalDiff = 0;
+			int minDiff = target.getMinimumDifference();
+			boolean eq = false;
 			for (Diff diff : diffs) {
+
 				if (diff.operation == Operation.EQUAL) {
-
-					span = new StyleSpan(Typeface.ITALIC);
-					if (diff.text.length() > 6) {
-						displayDiff.append("[...]", span);
-					} else {
-						displayDiff.append(diff.text, span);
-					}
-				} else {
-
-					// ignore completely whitespace diff
-					if (diff.text.matches("^\\s+$")) {
-						continue;
+					if (!eq) {
+						displayDiff.append("[...]", new StyleSpan(
+								Typeface.ITALIC));
+						eq = true;
 					}
 
-					totalDiff += diff.text.length();
 					logBuilder.append(diff.toString());
 					logBuilder.append('\n');
+				} else {
+					int size = diff.text.length();
+					if (size > minDiff) {
+						totalDiff += size;
 
-					if (diff.operation == Operation.INSERT) {
-						span = new StyleSpan(Typeface.BOLD);
-						displayDiff.append(diff.text, span);
+						logBuilder.append(diff.toString());
+						logBuilder.append('\n');
+
+						if (diff.operation == Operation.INSERT) {
+							displayDiff.append(diff.text, new StyleSpan(
+									Typeface.BOLD));
+							eq = false;
+						}
+					} else {
+						logBuilder.append('(');
+						logBuilder.append(diff.toString());
+						logBuilder.append(')');
+						logBuilder.append('\n');
 					}
-
-					// span = new StrikethroughSpan();
 				}
 			}
 
 			target.setDisplayDiff(displayDiff.buildString());
 
-			if (totalDiff > target.getMinimumDifference()) {
+			if (totalDiff > 0) {
 				target.setContent(content);
 				target.setStatus(Status.UPDATED);
 				target.setLastUpdate(now);
-
-				// log
-				File logDir = WatsonUtils.getLogDir(this);
-				File path = new File(logDir, target.getTargetId() + ".log");
-				WatsonUtils.writeTextFile(path.getPath(),
-						logBuilder.toString(), "UTF-8");
 			}
+
+			// log
+			File logDir = WatsonUtils.getLogDir(this);
+			File path = new File(logDir, target.getTargetId() + ".log");
+			WatsonUtils.writeTextFile(path.getPath(), logBuilder.toString(),
+					"UTF-8");
 		}
 	}
 
