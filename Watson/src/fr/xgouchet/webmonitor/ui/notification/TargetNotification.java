@@ -107,14 +107,16 @@ public class TargetNotification {
 			final Target target) {
 		Builder builder = new Builder(context);
 
+		String smallMessage = "New content for : \"" + target.getTitle() + "\"";
+
 		// Basic notif params
 		builder.setWhen(System.currentTimeMillis());
 		builder.setContentTitle(target.getTitle());
 		builder.setAutoCancel(true);
 		builder.setLargeIcon(WatsonUtils.getTargetIcon(context, target));
 
-		builder.setSmallIcon(R.drawable.stat_notify_sync);
-		builder.setContentText("New Content");
+		builder.setSmallIcon(R.drawable.ic_stat_sync);
+		builder.setContentText(smallMessage);
 
 		// Led blink ?
 		if (Settings.sBlinkLed) {
@@ -131,8 +133,7 @@ public class TargetNotification {
 		// Android JB big notification
 		if (VERSION.SDK_INT >= VERSION_CODES.JELLY_BEAN) {
 			Notification.BigTextStyle bigTextStyle = new BigTextStyle(builder);
-			bigTextStyle.setSummaryText("New content is available for page \""
-					+ target.getTitle() + "\"");
+			bigTextStyle.setSummaryText(smallMessage);
 			bigTextStyle.bigText(target.getDisplayDiff());
 
 			return bigTextStyle.build();
@@ -163,7 +164,7 @@ public class TargetNotification {
 		builder.setAutoCancel(true);
 		builder.setLargeIcon(WatsonUtils.getTargetIcon(context, target));
 
-		builder.setSmallIcon(R.drawable.stat_notify_sync_error);
+		builder.setSmallIcon(R.drawable.ic_stat_sync_error);
 		builder.setContentText("An error occured");
 
 		// Led blink ?

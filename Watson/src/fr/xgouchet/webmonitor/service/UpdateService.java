@@ -219,7 +219,7 @@ public class UpdateService extends IntentService {
 
 					logBuilder.append(diff.toString());
 					logBuilder.append('\n');
-				} else {
+				} else if (diff.operation == Operation.INSERT) {
 					int size = diff.text.length();
 					if (size > minDiff) {
 						totalDiff += size;
@@ -227,17 +227,21 @@ public class UpdateService extends IntentService {
 						logBuilder.append(diff.toString());
 						logBuilder.append('\n');
 
-						if (diff.operation == Operation.INSERT) {
-							displayDiff.append(diff.text, new StyleSpan(
-									Typeface.BOLD));
-							eq = false;
-						}
+						displayDiff.append(diff.text, new StyleSpan(
+								Typeface.BOLD));
+						eq = false;
+
 					} else {
 						logBuilder.append('(');
 						logBuilder.append(diff.toString());
 						logBuilder.append(')');
 						logBuilder.append('\n');
 					}
+				} else {
+					logBuilder.append('(');
+					logBuilder.append(diff.toString());
+					logBuilder.append(')');
+					logBuilder.append('\n');
 				}
 			}
 
