@@ -16,11 +16,13 @@ import android.util.Log;
 import android.widget.Toast;
 import fr.xgouchet.webmonitor.common.Constants;
 import fr.xgouchet.webmonitor.common.DB;
+import fr.xgouchet.webmonitor.common.Settings;
 import fr.xgouchet.webmonitor.data.Status;
 import fr.xgouchet.webmonitor.data.Target;
 import fr.xgouchet.webmonitor.data.TargetDAO;
 import fr.xgouchet.webmonitor.provider.TargetContentProvider;
 import fr.xgouchet.webmonitor.ui.notification.TargetNotification;
+import fr.xgouchet.webmonitor.ui.notification.TargetPebbleNotification;
 import fr.xgouchet.webmonitor.utils.DiffUtils;
 import fr.xgouchet.webmonitor.utils.SpannableBuilder;
 import fr.xgouchet.webmonitor.utils.WatsonUtils;
@@ -274,6 +276,14 @@ public class UpdateService extends IntentService {
 			} else {
 				TargetNotification.clearErrorNotifications(mNotifMgr,
 						target.getUrl());
+			}
+		}
+
+		if (Settings.sNotifyPebble) {
+			for (Target target : mUpdated) {
+				if (target.getStatus() != Status.OK) {
+					TargetPebbleNotification.notifyTargetStatus(this, target);
+				}
 			}
 		}
 	}

@@ -1,38 +1,41 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-	<string name="app_name">Watson</string>
-	<string name="title_watson">Watson</string>
-	<string name="title_target_edit">Watson - %1$s</string>
-	<string name="title_target_new">Watson - New page</string>
-	<string name="title_settings">Watson - Settings</string>
-	<string name="title_about">Watson - About &#8230;</string>
+    <string name="app_name">Watson</string>
+    <string name="title_watson">Watson</string>
+    <string name="title_target_edit">Watson - %1$s</string>
+    <string name="title_target_new">Watson - New page</string>
+    <string name="title_settings">Watson - Settings</string>
+    <string name="title_about">Watson - About &#8230;</string>
 
-	<!--  -->
-	<string name="ui_delete">Delete</string>
-	<string name="ui_cancel">Cancel</string>
-	<string name="ui_add">Add</string>
-	<string name="ui_save">Save</string>
-	<string name="ui_url">Page URL</string>
-	<string name="ui_title">Page Title</string>
-	<string name="ui_frequency">Frequency</string>
-	<string name="ui_difference">Difference</string>
-	<string name="ui_last_update">"Last updated : %1$s"</string>
-	<string name="ui_last_check">"Last checked : %1$s"</string>
-	<string name="ui_status">"Last status : %1$s"</string>
-	<string name="ui_empty">"No website watched yet. \nAdd one now, or share a webpage from your favorite browser."</string>
+    <!--  -->
+    <string name="ui_delete">Delete</string>
+    <string name="ui_cancel">Cancel</string>
+    <string name="ui_add">Add</string>
+    <string name="ui_sort">Sort</string>
+    <string name="ui_save">Save</string>
+    <string name="ui_url">Page URL</string>
+    <string name="ui_title">Page Title</string>
+    <string name="ui_frequency">Frequency</string>
+    <string name="ui_difference">Difference</string>
+    <string name="ui_last_update">"Last updated : %1$s"</string>
+    <string name="ui_last_check">"Last checked : %1$s"</string>
+    <string name="ui_status">"Last status : %1$s"</string>
+    <string name="ui_empty">"No website watched yet. \nAdd one now, or share a webpage from your favorite browser."</string>
+    <string name="ui_deleted">"Page deleted"</string>
+    <string name="ui_undo">Undo</string>
 
-	<!--  -->
-	<string name="prompt_delete">"Do you really want to delete \"%1$s\" ?"</string>
+    <!--  -->
+    <string name="prompt_delete">"Do you really want to delete \"%1$s\" ?"</string>
 
-	<!--  -->
-	<string name="menu_about">About &#8230;</string>
-	<string name="menu_settings">Settings</string>
+    <!--  -->
+    <string name="menu_about">About &#8230;</string>
+    <string name="menu_settings">Settings</string>
 
-	<!--  -->
-	<string name="action_open">Open</string>
-	<string name="action_edit">Edit</string>
-	<string name="action_check">Check now</string>
-	<string name="action_delete">Delete</string>
+    <!--  -->
+    <string name="action_open">Open</string>
+    <string name="action_edit">Edit</string>
+    <string name="action_check">Check now</string>
+    <string name="action_delete">Delete</string>
 
 </resources>

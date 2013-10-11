@@ -20,18 +20,19 @@ public class TargetAdapter extends SimpleCursorAdapter {
 	public interface Listener {
 		void onActionRequested(int actionIndex, Target target);
 	}
-
+  
 	private Listener mListener;
 
 	private class ViewHolder implements OnClickListener {
-		private ImageView mIcon;
-		private TextView mTitle, mLastCheck, mLastUpdated;
+		private ImageView mIcon, mStatus;
+		private TextView mTitle, mLastCheck, mLastUpdated; 
 		private View mAction1, mAction2, mAction3;
 
 		private Target mTarget;
 
 		public ViewHolder(View root) {
 			mIcon = (ImageView) root.findViewById(android.R.id.icon);
+			mStatus = (ImageView) root.findViewById(android.R.id.icon2);
 			mTitle = (TextView) root.findViewById(android.R.id.title);
 			mLastCheck = (TextView) root.findViewById(android.R.id.text1);
 			mLastUpdated = (TextView) root.findViewById(android.R.id.text2);
@@ -132,6 +133,10 @@ public class TargetAdapter extends SimpleCursorAdapter {
 		} else {
 			holder.mIcon.setImageBitmap(bmp);
 		}
+
+		// status
+		int satusIcon = WatsonUtils.getIconForStatus(target.getStatus());
+		holder.mStatus.setImageResource(satusIcon);
 	}
 
 }

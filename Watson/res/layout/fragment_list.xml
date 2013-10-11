@@ -11,6 +11,8 @@
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
         android:divider="@android:color/transparent"
+        android:paddingBottom="@dimen/card_half_margin"
+        android:paddingTop="@dimen/card_half_margin"
         tools:listitem="@layout/item_target" />
 
     <RelativeLayout

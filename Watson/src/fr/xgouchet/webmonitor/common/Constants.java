@@ -29,6 +29,9 @@ public final class Constants {
 	public static final String PREF_LED_COLOR = "led_color";
 	public static final String PREF_BLINK_LED_ERROR = "blink_led_error";
 	public static final String PREF_LED_ERROR_COLOR = "led_error_color";
+	
+	public static final String PREF_PEBBLE_WATCH = "pebble_watch";
+	
 	public static final String PREF_WIFI_ONLY = "wifi_only";
 	public static final String PREF_ALLOW_ROAMING = "allow_roaming";
 	public static final String PREF_DEFAULT_FREQUENCY = "default_frequency";

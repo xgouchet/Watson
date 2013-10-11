@@ -4,19 +4,18 @@ import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentTransaction;
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Build.VERSION;
 import android.os.Build.VERSION_CODES;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import fr.xgouchet.webmonitor.R;
-import fr.xgouchet.webmonitor.common.Constants;
 import fr.xgouchet.webmonitor.common.Settings;
 import fr.xgouchet.webmonitor.ui.fragment.PrefsFragment;
 import fr.xgouchet.webmonitor.ui.fragment.TargetListFragment;
@@ -49,7 +48,10 @@ public class MainActivity extends Activity {
 		if (Intent.ACTION_MANAGE_NETWORK_USAGE.equals(action)) {
 			showSettings();
 		} else {
-			showTargetList();
+			// Check if current fragment is set already
+			if (getFragmentManager().getBackStackEntryCount() == 0) {
+				showTargetList();
+			}
 		}
 	}
 
@@ -58,8 +60,7 @@ public class MainActivity extends Activity {
 		super.onResume();
 
 		SharedPreferences prefs;
-		prefs = getSharedPreferences(Constants.PREFERENCES_NAME,
-				Context.MODE_PRIVATE);
+		prefs = PreferenceManager.getDefaultSharedPreferences(this);
 		Settings.updateFromPreferences(prefs);
 	}
 
@@ -70,9 +71,10 @@ public class MainActivity extends Activity {
 
 		// TODO remove some contents
 		if (getFragmentManager().getBackStackEntryCount() > 0) {
-			Log.i("TOTO", "GET CURRENT");
+			Log.i("onCreateOptionsMenu", getFragmentManager()
+					.getBackStackEntryAt(0).getName());
 		} else {
-			Log.i("TOTO", "null");
+			Log.i("onCreateOptionsMenu", "null");
 		}
 
 		return true;
@@ -132,7 +134,7 @@ public class MainActivity extends Activity {
 		}
 	}
 
-	@TargetApi(Build.VERSION_CODES.HONEYCOMB_MR2)
+	@TargetApi(Build.VERSION_CODES.HONEYCOMB)
 	private void showSettings() {
 		FragmentTransaction transaction = getFragmentManager()
 				.beginTransaction();

@@ -9,6 +9,7 @@
     <string name="pref_title_led_color">Update Color</string>
     <string name="pref_title_blink_led_error">Error Notification Light</string>
     <string name="pref_title_led_error_color">Error Color</string>
+    <string name="pref_title_notify_pebble">Notify Pebble Watch</string>
     <string name="pref_summary_led_color">"Light's color for updates"</string>
     <string name="pref_summary_on_blink_led">"The phone's led will blink when an update is detected"</string>
     <string name="pref_summary_off_blink_led">"The phone's led won't be used for updates"</string>

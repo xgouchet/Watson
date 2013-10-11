@@ -11,6 +11,7 @@ public final class Settings {
     public static int sBlinkLedColor = Color.WHITE;
     public static boolean sBlinkLedError = false;
     public static int sBlinkLedErrorColor = Color.RED;
+    public static boolean sNotifyPebble = false; 
     
     // Network
     public static boolean sWifiOnly = false;
@@ -32,6 +33,8 @@ public final class Settings {
                 preferences.getString(Constants.PREF_LED_ERROR_COLOR, "red"),
                 Color.RED);
         
+        sNotifyPebble = preferences.getBoolean(Constants.PREF_PEBBLE_WATCH, false);
+        
         sWifiOnly = preferences.getBoolean(Constants.PREF_WIFI_ONLY, false);
         sAllowRoaming = preferences.getBoolean(Constants.PREF_ALLOW_ROAMING,
                 false);
@@ -51,7 +54,7 @@ public final class Settings {
         catch (NumberFormatException e) {
             pref = def;
         }
-        return pref;
+        return pref; 
     }
     
     public static int getColorPreference(final String value, final int def) {

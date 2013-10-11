@@ -7,7 +7,6 @@ import android.content.CursorLoader;
 import android.content.Intent;
 import android.content.Loader;
 import android.database.Cursor;
-import android.database.CursorWrapper;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -16,9 +15,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ListView;
 import fr.xgouchet.webmonitor.R;
-import fr.xgouchet.webmonitor.activity.TargetActivity;
 import fr.xgouchet.webmonitor.common.Constants;
 import fr.xgouchet.webmonitor.common.DB;
 import fr.xgouchet.webmonitor.data.Target;
@@ -64,8 +61,8 @@ public class TargetListFragment extends ListFragment implements
 		mAdapter.setListener(this);
 		setListAdapter(mAdapter);
 
-		// TODO on long click : action mode
 		getListView().setEmptyView(getView().findViewById(android.R.id.empty));
+		getListView().setItemsCanFocus(true);
 	}
 
 	@Override
@@ -112,29 +109,10 @@ public class TargetListFragment extends ListFragment implements
 			editTarget(target);
 			break;
 		case 2:
-			checkTarget(target);
+			// checkTarget(target);
+			// TODO delete
 			break;
 		}
-	}
-
-	// ////////////////////////////////////////////////////////////////////////////////////
-	// ListFragment Implementation
-	// ////////////////////////////////////////////////////////////////////////////////////
-
-	@Override
-	public void onListItemClick(final ListView l, final View v,
-			final int position, final long id) {
-		super.onListItemClick(l, v, position, id);
-
-		// TODO if action mode : add / remove from action mode
-
-		CursorWrapper cursor = (CursorWrapper) mAdapter.getItem(position);
-		Target target = TargetDAO.buildTargetFromCursor(cursor);
-
-		Intent intent = new Intent(getActivity(), TargetActivity.class);
-		intent.setAction(Constants.ACTION_EDIT_TARGET);
-		intent.putExtra(Constants.EXTRA_TARGET, target);
-		startActivity(intent);
 	}
 
 	// ////////////////////////////////////////////////////////////////////////////////////
@@ -222,29 +200,4 @@ public class TargetListFragment extends ListFragment implements
 		addTarget.show(ft, "dialog");
 	}
 
-	/**
-	 * TODO Prompts the user before deleting the selected target
-	 */
-	private void deleteTarget() {
-		// Builder builder;
-		// builder = new Builder(this);
-		// builder.setTitle(R.string.ui_delete);
-		// builder.setMessage(getString(R.string.prompt_delete,
-		// mSelectedTarget.getTitle()));
-		//
-		// builder.setPositiveButton(R.string.ui_delete,
-		// new DialogInterface.OnClickListener() {
-		// public void onClick(DialogInterface dialog, int which) {
-		// doDeletetarget();
-		// }
-		// });
-		// builder.setNegativeButton(R.string.ui_cancel,
-		// new DialogInterface.OnClickListener() {
-		// public void onClick(DialogInterface dialog, int which) {
-		//
-		// }
-		// });
-		//
-		// builder.create().show();
-	}
 }

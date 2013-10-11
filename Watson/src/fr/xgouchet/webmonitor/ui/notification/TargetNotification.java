@@ -84,8 +84,7 @@ public class TargetNotification {
 
 			id = NOTIF_UPDATE;
 		} else {
-			// intent = buildErrorNotification(context, builder, target);
-			notif = null;
+			notif = buildErrorNotification(context, target);
 			id = NOTIF_ERROR;
 		}
 
