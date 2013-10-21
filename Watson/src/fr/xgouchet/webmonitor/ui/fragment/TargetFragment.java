@@ -244,7 +244,7 @@ public class TargetFragment extends DialogFragment implements OnShowListener {
     
     private int getFrequencyIndex(final long frequency) {
         int index;
-        // TODO check this algo
+        
         if (frequency == 0) {
             index = Settings.sDefaultFrequency;
         } else {
@@ -266,7 +266,7 @@ public class TargetFragment extends DialogFragment implements OnShowListener {
     
     private int getDifferenceIndex(final int difference) {
         int index;
-        // TODO check 
+
         index = -1;
         for (int i = 0; i < Constants.DIFFERENCES.length; i++) {
             if (Constants.DIFFERENCES[i] >= difference) {

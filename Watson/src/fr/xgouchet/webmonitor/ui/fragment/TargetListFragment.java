@@ -20,6 +20,7 @@ import android.view.ViewGroup;
 import fr.xgouchet.webmonitor.R;
 import fr.xgouchet.webmonitor.common.Constants;
 import fr.xgouchet.webmonitor.common.DB;
+import fr.xgouchet.webmonitor.common.Settings;
 import fr.xgouchet.webmonitor.data.Target;
 import fr.xgouchet.webmonitor.data.TargetDAO;
 import fr.xgouchet.webmonitor.provider.TargetContentProvider;
@@ -85,8 +86,16 @@ public class TargetListFragment extends ListFragment implements
 		boolean result = true;
 
 		switch (item.getItemId()) {
-		case R.id.menu_add:
+		case R.id.action_add:
 			addNewTarget();
+			break;
+		case R.id.action_sort_by_name:
+			Settings.setSortMethod(Constants.SORT_BY_NAME, getActivity());
+			restartLoader();
+			break;
+		case R.id.action_sort_by_last_update:
+			Settings.setSortMethod(Constants.SORT_BY_LAST_UPDATE, getActivity());
+			restartLoader();
 			break;
 		default:
 			result = super.onOptionsItemSelected(item);
@@ -120,14 +129,28 @@ public class TargetListFragment extends ListFragment implements
 	// LoaderCallback Implementation
 	// ////////////////////////////////////////////////////////////////////////////////////
 
+	private void restartLoader() {
+		getActivity().getLoaderManager().restartLoader(LOADER_ID, null, this);
+	}
+
 	@Override
 	public Loader<Cursor> onCreateLoader(final int id, final Bundle args) {
 		final String[] columns = new String[] { DB.TARGET.ID, DB.TARGET.URL,
 				DB.TARGET.TITLE, DB.TARGET.LAST_UPDATE, DB.TARGET.LAST_CHECK,
 				DB.TARGET.STATUS, DB.TARGET.DIFFERENCE };
 
-		// TODO add sort preference
-		final String sortOrder = DB.TARGET.TITLE + " ASC";
+		// set sort order
+		final String sortOrder;
+
+		switch (Settings.sSortMethod) {
+		case Constants.SORT_BY_LAST_UPDATE:
+			sortOrder = DB.TARGET.LAST_UPDATE + " DESC";
+			break;
+		case Constants.SORT_BY_NAME:
+		default:
+			sortOrder = DB.TARGET.TITLE + " ASC";
+			break;
+		}
 
 		return new CursorLoader(getActivity(), TargetContentProvider.BASE_URI,
 				columns, null, null, sortOrder);

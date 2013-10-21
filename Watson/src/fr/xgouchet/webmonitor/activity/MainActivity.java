@@ -3,6 +3,7 @@ package fr.xgouchet.webmonitor.activity;
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.Fragment;
+import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -11,6 +12,7 @@ import android.os.Build.VERSION;
 import android.os.Build.VERSION_CODES;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.Menu;
@@ -103,7 +105,7 @@ public class MainActivity extends Activity {
 	}
 
 	@Override
-	public boolean onKeyUp(int keyCode, KeyEvent event) {
+	public boolean onKeyUp(final int keyCode, final KeyEvent event) {
 
 		if (keyCode == KeyEvent.KEYCODE_BACK) {
 			if (getFragmentManager().popBackStackImmediate()) {
@@ -126,7 +128,7 @@ public class MainActivity extends Activity {
 
 		setTransactionAnimations(transaction);
 		transaction.replace(android.R.id.primary, fragment, TAG_LIST);
-		addTransactionToBackStack(transaction);
+		addToBackstackIfDifferent(fragment, transaction, TAG_LIST);
 		transaction.commit();
 
 		if (VERSION.SDK_INT >= VERSION_CODES.HONEYCOMB) {
@@ -143,7 +145,7 @@ public class MainActivity extends Activity {
 
 		setTransactionAnimations(transaction);
 		transaction.replace(android.R.id.primary, fragment, TAG_PREFS);
-		addTransactionToBackStack(transaction);
+		addToBackstackIfDifferent(fragment, transaction, TAG_PREFS);
 		transaction.commit();
 
 		if (VERSION.SDK_INT >= VERSION_CODES.HONEYCOMB) {
@@ -155,12 +157,32 @@ public class MainActivity extends Activity {
 
 	}
 
+	private void addToBackstackIfDifferent(final Fragment fragment,
+			final FragmentTransaction transaction, final String tag) {
+		FragmentManager fragmentMgr = getFragmentManager();
+		int count = fragmentMgr.getBackStackEntryCount();
+
+		if (count == 0) {
+			return;
+		}
+
+		String name = fragmentMgr.getBackStackEntryAt(count - 1).getName();
+		if (!TextUtils.isEmpty(name)) {
+			Fragment top = fragmentMgr.findFragmentByTag(name);
+			if ((top != null) && (top.getClass().equals(fragment.getClass()))) {
+				return;
+			}
+		}
+
+		transaction.addToBackStack(tag);
+	}
+
 	/**
 	 * 
 	 * @param transaction
 	 */
 	@TargetApi(Build.VERSION_CODES.HONEYCOMB_MR2)
-	private void setTransactionAnimations(FragmentTransaction transaction) {
+	private void setTransactionAnimations(final FragmentTransaction transaction) {
 		if (VERSION.SDK_INT >= VERSION_CODES.HONEYCOMB_MR2) {
 			transaction.setCustomAnimations(android.R.animator.fade_in,
 					android.R.animator.fade_out, android.R.animator.fade_in,
@@ -168,16 +190,6 @@ public class MainActivity extends Activity {
 		} else {
 			transaction.setCustomAnimations(android.R.animator.fade_in,
 					android.R.animator.fade_out);
-		}
-	}
-
-	/**
-	 * 
-	 * @param transaction
-	 */
-	private void addTransactionToBackStack(FragmentTransaction transaction) {
-		if (getFragmentManager().findFragmentById(android.R.id.primary) != null) {
-			transaction.addToBackStack(TAG_PREFS);
 		}
 	}
 }

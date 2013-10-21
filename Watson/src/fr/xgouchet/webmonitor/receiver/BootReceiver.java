@@ -36,9 +36,9 @@ public class BootReceiver extends BroadcastReceiver {
         final PendingIntent pending = PendingIntent.getBroadcast(context, 0,
                 intent, PendingIntent.FLAG_UPDATE_CURRENT);
         
-        // compute first call time 5 minutes after boot
+        // compute first call time n minutes after boot
         Calendar calendar = Calendar.getInstance();
-        calendar.add(Calendar.SECOND, 5); // FIXME 
+        calendar.add(Calendar.MINUTE, 10); 
         long trigger = calendar.getTimeInMillis();
         
         // set delay between each call

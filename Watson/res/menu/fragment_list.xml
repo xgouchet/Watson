@@ -2,14 +2,25 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android" >
 
     <item
-        android:id="@+id/menu_sort"
+        android:id="@+id/action_sort"
         android:icon="@drawable/ic_action_sort"
         android:showAsAction="always"
-        android:title="@string/ui_sort"/>
+        android:title="@string/action_sort">
+        <menu>
+            <item
+                android:id="@+id/action_sort_by_name"
+                android:icon="@drawable/ic_action_sort_by_name"
+                android:title="@string/action_sort_by_name"/>
+            <item
+                android:id="@+id/action_sort_by_last_update"
+                android:icon="@drawable/ic_action_sort_by_last_update"
+                android:title="@string/action_sort_by_last_update"/>
+        </menu>
+    </item>
     <item
-        android:id="@+id/menu_add"
+        android:id="@+id/action_add"
         android:icon="@drawable/ic_action_add"
-        android:showAsAction="ifRoom"
-        android:title="@string/ui_add"/>
+        android:showAsAction="always"
+        android:title="@string/action_add"/>
 
 </menu>

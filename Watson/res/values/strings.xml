@@ -11,8 +11,6 @@
     <!--  -->
     <string name="ui_delete">Delete</string>
     <string name="ui_cancel">Cancel</string>
-    <string name="ui_add">Add</string>
-    <string name="ui_sort">Sort</string>
     <string name="ui_save">Save</string>
     <string name="ui_url">Page URL</string>
     <string name="ui_title">Page Title</string>
@@ -29,9 +27,15 @@
     <string name="prompt_delete">"Do you really want to delete \"%1$s\" ?"</string>
 
     <!--  -->
-    <string name="menu_about">About &#8230;</string>
-    <string name="menu_settings">Settings</string>
-
+    <string name="action_about">About &#8230;</string>
+    <string name="action_settings">Settings</string>
+    <string name="action_import">Import</string>
+    <string name="action_export">Export</string>
+    <string name="action_add">Add</string>
+    <string name="action_sort">Sort</string>
+    <string name="action_sort_by_name">by name</string>
+    <string name="action_sort_by_last_update">by last update</string>
+    
     <!--  -->
     <string name="action_open">Open</string>
     <string name="action_edit">Edit</string>
