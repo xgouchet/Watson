@@ -1,9 +1,11 @@
 package fr.xgouchet.webmonitor.ui.fragment;
 
+import android.app.AlertDialog;
 import android.app.FragmentTransaction;
 import android.app.ListFragment;
 import android.app.LoaderManager.LoaderCallbacks;
 import android.content.CursorLoader;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.Loader;
 import android.database.Cursor;
@@ -39,7 +41,7 @@ public class TargetListFragment extends ListFragment implements
 	// ////////////////////////////////////////////////////////////////////////////////////
 
 	@Override
-	public void onCreate(Bundle savedInstanceState) {
+	public void onCreate(final Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
 		setHasOptionsMenu(true);
@@ -98,7 +100,7 @@ public class TargetListFragment extends ListFragment implements
 	// ////////////////////////////////////////////////////////////////////////////////////
 
 	@Override
-	public void onActionRequested(int actionIndex, Target target) {
+	public void onActionRequested(final int actionIndex, final Target target) {
 
 		//
 		switch (actionIndex) {
@@ -109,8 +111,7 @@ public class TargetListFragment extends ListFragment implements
 			editTarget(target);
 			break;
 		case 2:
-			// checkTarget(target);
-			// TODO delete
+			deleteTarget(target);
 			break;
 		}
 	}
@@ -162,7 +163,7 @@ public class TargetListFragment extends ListFragment implements
 		addTarget.show(ft, "dialog");
 	}
 
-	private void openTargetUrl(Target target) {
+	private void openTargetUrl(final Target target) {
 		Intent intent = new Intent(Intent.ACTION_VIEW);
 		intent.setData(Uri.parse(target.getUrl()));
 		startActivity(intent);
@@ -171,7 +172,7 @@ public class TargetListFragment extends ListFragment implements
 	/**
 	 * Force check the target now
 	 */
-	private void checkTarget(Target target) {
+	private void checkTarget(final Target target) {
 
 		Target fullTarget = TargetDAO.getInstance(getActivity()).getTarget(
 				target.getUrl());
@@ -185,7 +186,7 @@ public class TargetListFragment extends ListFragment implements
 	/**
 	 * 
 	 */
-	private void editTarget(Target target) {
+	private void editTarget(final Target target) {
 		Target fullTarget = TargetDAO.getInstance(getActivity()).getTarget(
 				target.getUrl());
 
@@ -200,4 +201,25 @@ public class TargetListFragment extends ListFragment implements
 		addTarget.show(ft, "dialog");
 	}
 
+	private void deleteTarget(final Target target) {
+		AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+
+		builder.setTitle(target.getTitle());
+
+		builder.setMessage(getString(R.string.prompt_delete, target.getUrl()));
+
+		builder.setNegativeButton(R.string.ui_delete,
+				new DialogInterface.OnClickListener() {
+
+					@Override
+					public void onClick(final DialogInterface dialog,
+							final int which) {
+						TargetDAO.getInstance(getActivity()).deleteTarget(
+								target);
+					}
+				});
+		builder.setNeutralButton(R.string.ui_cancel, null);
+
+		builder.create().show();
+	}
 }
